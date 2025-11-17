@@ -131,8 +131,8 @@ nav a:hover { color:#e50914; }
   <nav>
     <a href="#">Accueil</a>
     <a href="#">Téléréalité</a>
-     <a href="#">Match Live</a>
-     <a href="#">Shahid Series</a>
+    <a href="#">Shahid Series</a>
+    <a href="#">Match Live</a>
   </nav>
 </header>
 
@@ -167,6 +167,24 @@ nav a:hover { color:#e50914; }
   <div class="card" onclick="showEpisodes('cinquante')">
     <img src="images/cinquante2025.jpg" alt="Les Cinquante 2025">
     <div class="card-title">Les Cinquante 2025</div>
+    <div class="card-info">2025</div>
+  </div>
+
+</div>
+
+<!-- ---------------- SHAHID SERIES ---------------- -->
+<h2 class="section-title">Shahid Series</h2>
+<div class="series-row">
+
+  <div class="card" onclick="showEpisodes('ward')">
+    <img src="images/ward.jpg" alt="ورد و شكولاطة">
+    <div class="card-title">ورد و شكولاطة</div>
+    <div class="card-info">2025</div>
+  </div>
+
+  <div class="card" onclick="showEpisodes('Salma')">
+    <img src="images/salma.jpg" alt="سلمى">
+    <div class="card-title">ليلى</div>
     <div class="card-info">2025</div>
   </div>
 
@@ -242,6 +260,19 @@ nav a:hover { color:#e50914; }
   </div>
 </div>
 
+<!-- ---------------- EPISODES SHAHID SERIES ---------------- -->
+<div id="ward" class="episodes-section">
+  <div class="back-btn" onclick="goBack()">← Retour</div>
+  <h2>ورد و شكولاطة — 2025</h2>
+  <div class="episode"><h3>Épisode 1</h3><iframe src="https://uqload.cx/embed-sy4elb7c5dva.html" allowfullscreen></iframe></div>
+</div>
+
+<div id="leila" class="episodes-section">
+  <div class="back-btn" onclick="goBack()">← Retour</div>
+  <h2>ليلى — 2025</h2>
+  <div class="episode"><h3>Épisode 1</h3><iframe src="https://uqload.cx/embed-3kpy7r69n97b.html" allowfullscreen></iframe></div>
+</div>
+
 <!-- ---------------- SCRIPT ---------------- -->
 <script>
 function showEpisodes(id){
@@ -258,7 +289,3 @@ function goBack(){
 
 </body>
 </html>
-
-
-
-
