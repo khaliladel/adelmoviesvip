@@ -131,7 +131,7 @@ nav a:hover { color:#e50914; }
   <nav>
     <a href="#">Accueil</a>
     <a href="#">Téléréalité</a>
-    <a href="#matchlive">Match Live</a>
+    <a href="#matchlive-title">Match Live</a>
   </nav>
 </header>
 
@@ -172,10 +172,10 @@ nav a:hover { color:#e50914; }
 </div>
 
 <!-- ---------------- ⚽ MATCH LIVE CATEGORY ---------------- -->
-<h2 class="section-title" id="matchlive">Match Live</h2>
+<h2 class="section-title" id="matchlive-title">Match Live</h2>
 <div class="series-row">
 
-  <div class="card" onclick="showEpisodes('matchlive')">
+  <div class="card" onclick="showEpisodes('matchlive-episodes')">
     <img src="images/matchlive.jpg" alt="Match Live">
     <div class="card-title">Match Live</div>
     <div class="card-info">2025</div>
@@ -184,14 +184,14 @@ nav a:hover { color:#e50914; }
 </div>
 
 <!-- ---------------- EPISODES : MATCH LIVE ---------------- -->
-<div id="matchlive" class="episodes-section">
+<div id="matchlive-episodes" class="episodes-section">
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>Match Live — Diffusions en Direct</h2>
 
-  <div class="episode"><h3>Algerie - Egypt </h3>
+  <div class="episode">
+    <h3>Match 1 — Algérie vs Égypte</h3>
     <iframe src="https://uqload.cx/embed-sy4elb7c5dva.html" allowfullscreen></iframe>
   </div>
-</div>
 
   <div class="episode">
     <h3>Match 2 — Real Madrid vs Barcelone</h3>
@@ -230,7 +230,7 @@ nav a:hover { color:#e50914; }
 
 </div>
 
-<!-- ---------------- EPISODES EXISTANTS ---------------- -->
+<!-- ---------------- EPISODES TELEREALITE ---------------- -->
 <div id="bataille" class="episodes-section">
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>La Bataille — 2025</h2>
@@ -286,4 +286,3 @@ function goBack(){
 
 </body>
 </html>
-
