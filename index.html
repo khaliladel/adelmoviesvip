@@ -102,14 +102,20 @@ nav a:hover { color:#e50914; }
   padding:20px;
   display:none;
 }
-.episode { margin-bottom:25px; }
-.episode h3 { margin-bottom:10px; font-size:18px; }
-.episode iframe, .episode video {
-  width:100%;
-  max-width:800px;
-  height:450px;
-  border:none;
+.episode {
+  margin-bottom:20px;
+  background:#111;
+  padding:10px;
   border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+}
+.episode:hover {
+  background:#1b1b1b;
+}
+.episode h3 {
+  margin:0;
+  font-size:18px;
 }
 
 /* Bouton retour */
@@ -119,6 +125,55 @@ nav a:hover { color:#e50914; }
   cursor:pointer;
   color:#4fa3ff;
   font-weight:bold;
+}
+
+/* ------- POPUP (MODAL PLAYER) -------- */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #111;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 900px;
+  width: 95%;
+  position: relative;
+}
+
+.modal iframe,
+.modal video {
+  width: 100%;
+  height: 500px;
+  border: none;
+  border-radius: 10px;
+}
+
+.close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #e50914;
+  color: white;
+  font-size: 28px;
+  padding: 5px 15px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close:hover {
+  background: #b00710;
 }
 </style>
 </head>
@@ -190,8 +245,8 @@ nav a:hover { color:#e50914; }
 
 </div>
 
-<!-- ---------------- ⚽ MATCH LIVE CATEGORY ---------------- -->
-<h2 class="section-title" id="matchlive-title">Match Live</h2>
+<!-- ---------------- MATCH LIVE ---------------- -->
+<h2 class="section-title">Match Live</h2>
 <div class="series-row">
 
   <div class="card" onclick="showEpisodes('matchlive-episodes')">
@@ -202,86 +257,89 @@ nav a:hover { color:#e50914; }
 
 </div>
 
-<!-- ---------------- EPISODES : MATCH LIVE ---------------- -->
+<!-- ---------------- EPISODES ---------------- -->
+
+<!-- MATCH LIVE -->
 <div id="matchlive-episodes" class="episodes-section">
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>Match Live — Diffusions en Direct</h2>
 
-  <div class="episode">
-    <h3>Match 1 — Algérie vs Arabie saoudi </h3>
-  <iframe width="560" height="315" src="https://www.elahmad.com/tv/algeria_live.php?id=entv_algerie" style="border:none;" allowfullscreen allow="autoplay; fullscreen; picture-in-picture; xr-spatial-tracking; encrypted-media"></iframe>
+  <div class="episode" onclick="openEpisode('https://www.elahmad.com/tv/algeria_live.php?id=entv_algerie')">
+    <h3>Match 1 — Algérie vs Arabie saoudi</h3>
   </div>
 </div>
-
-<!-- ---------------- EPISODES TELEREALITE ---------------- -->
 
 <!-- La Bataille -->
 <div id="bataille" class="episodes-section">
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>La Bataille — 2025</h2>
-  <div class="episode"><h3>Épisode 1</h3><iframe src="https://uqload.cx/embed-sy4elb7c5dva.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 2</h3><iframe src="https://uqload.cx/embed-6phr26j84iqc.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 3</h3><iframe src="https://uqload.cx/embed-yjo4ylpd3uok.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 4</h3><iframe src="https://uqload.cx/embed-l8o1r35ulst3.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 5</h3><iframe src="https://uqload.cx/embed-cz3zka8tfxk9.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 6</h3><iframe src="https://uqload.cx/embed-lkcaskb9ldk7.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 7</h3><iframe src="https://uqload.cx/embed-klkck2revvrl.html" allowfullscreen></iframe></div>
+
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-sy4elb7c5dva.html')"><h3>Épisode 1</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-6phr26j84iqc.html')"><h3>Épisode 2</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-yjo4ylpd3uok.html')"><h3>Épisode 3</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-l8o1r35ulst3.html')"><h3>Épisode 4</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-cz3zka8tfxk9.html')"><h3>Épisode 5</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-lkcaskb9ldk7.html')"><h3>Épisode 6</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-klkck2revvrl.html')"><h3>Épisode 7</h3></div>
 </div>
 
 <!-- Le Cerveau -->
 <div id="cerveau" class="episodes-section">
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>Le Cerveau — 2025</h2>
-  <div class="episode"><h3>Épisode 1</h3><iframe src="https://uqload.cx/embed-qsu9x4yler9f.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 2</h3><iframe src="https://uqload.cx/embed-3kpy7r69n97b.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 3</h3><iframe src="https://uqload.cx/embed-cm9zn7dv28lr.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 4</h3><iframe src="https://uqload.cx/embed-vtgg8wcvnivi.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 5</h3><iframe src="https://uqload.cx/embed-b02zafo5w0zu.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 6</h3><iframe src="https://uqload.cx/embed-5zm6if99i0e7.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 7</h3><iframe src="https://uqload.cx/embed-toajyxe71ln0.html" allowfullscreen></iframe></div>
+
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-qsu9x4yler9f.html')"><h3>Épisode 1</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-3kpy7r69n97b.html')"><h3>Épisode 2</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-cm9zn7dv28lr.html')"><h3>Épisode 3</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-vtgg8wcvnivi.html')"><h3>Épisode 4</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-b02zafo5w0zu.html')"><h3>Épisode 5</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-5zm6if99i0e7.html')"><h3>Épisode 6</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-toajyxe71ln0.html')"><h3>Épisode 7</h3></div>
 </div>
 
 <!-- La Villa -->
 <div id="villa" class="episodes-section">
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>La Villa des Cœurs Brisés 2025</h2>
-  <div class="episode"><h3>Épisode 1</h3><iframe src="https://uqload.cx/embed-sy4elb7c5dva.html" allowfullscreen></iframe></div>
+
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-sy4elb7c5dva.html')"><h3>Épisode 1</h3></div>
 </div>
 
 <!-- Les Cinquante -->
 <div id="cinquante" class="episodes-section">
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>Les Cinquante — Saison 2025</h2>
-  <div class="episode">
+
+  <div class="episode" onclick="openEpisode('videos/cinquante-ep1.mp4', true)">
     <h3>Épisode 1</h3>
-    <video controls>
-      <source src="videos/cinquante-ep1.mp4" type="video/mp4">
-    </video>
   </div>
 </div>
 
-<!-- ---------------- EPISODES SHAHID SERIES ---------------- -->
+<!-- ورد و شكولاطة -->
 <div id="ward" class="episodes-section">
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>ورد و شكولاطة — 2025</h2>
-  <div class="episode"><h3>Épisode 1</h3><iframe src="https://vidmoly.net/embed-1lvffkxkg1se.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 2</h3><iframe src="https://vidmoly.net/embed-btiaep8sjnhr.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 3</h3><iframe src="https://vidmoly.net/embed-paarljdk98ep.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 4</h3><iframe src="https://vidmoly.net/embed-h5epigmcltju.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 5</h3><iframe src="https:////vidmoly.net/embed-z8z0p0xer8am.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 6</h3><iframe src="https://vidmoly.net/embed-ccs0pn24f34i.html" allowfullscreen></iframe></div>
-  <div class="episode"><h3>Épisode 7</h3><iframe src="https://uqload.cx/embed-toajyxe71ln0.html" allowfullscreen></iframe></div>
-</div>
+
+  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-1lvffkxkg1se.html')"><h3>Épisode 1</h3></div>
+  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-btiaep8sjnhr.html')"><h3>Épisode 2</h3></div>
+  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-paarljdk98ep.html')"><h3>Épisode 3</h3></div>
+  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-h5epigmcltju.html')"><h3>Épisode 4</h3></div>
+  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-z8z0p0xer8am.html')"><h3>Épisode 5</h3></div>
+  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-ccs0pn24f34i.html')"><h3>Épisode 6</h3></div>
+  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-toajyxe71ln0.html')"><h3>Épisode 7</h3></div>
 </div>
 
-<div id="leila" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>ليلى — 2025</h2>
-  <div class="episode"><h3>Épisode 1</h3><iframe src="https://uqload.cx/embed-3kpy7r69n97b.html" allowfullscreen></iframe></div>
+<!-- Pop-up lecteur vidéo -->
+<div id="videoModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">×</span>
+    <div id="videoContainer"></div>
+  </div>
 </div>
 
 <!-- ---------------- SCRIPT ---------------- -->
 <script>
+
 function showEpisodes(id){
   document.querySelectorAll('.episodes-section').forEach(s => s.style.display='none');
   document.getElementById(id).style.display='block';
@@ -292,9 +350,34 @@ function goBack(){
   document.querySelectorAll('.episodes-section').forEach(s => s.style.display='none');
   window.scrollTo({top:0, behavior:'smooth'});
 }
+
+// ---------- Ouvre une POPUP ----------
+function openEpisode(url, isVideo = false) {
+  const modal = document.getElementById("videoModal");
+  const container = document.getElementById("videoContainer");
+
+  container.innerHTML = "";
+
+  if (isVideo) {
+    container.innerHTML = `
+      <video controls autoplay>
+        <source src="${url}" type="video/mp4">
+      </video>
+    `;
+  } else {
+    container.innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
+  }
+
+  modal.style.display = "flex";
+}
+
+// ---------- Fermer la pop-up ----------
+function closeModal() {
+  document.getElementById("videoModal").style.display = "none";
+  document.getElementById("videoContainer").innerHTML = "";
+}
+
 </script>
 
 </body>
 </html>
-
-
