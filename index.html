@@ -175,6 +175,29 @@ nav a:hover { color:#e50914; }
 .close:hover {
   background: #b00710;
 }
+
+/* Styles pour les boutons serveurs */
+.server-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+.server-buttons button {
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.server-buttons button:hover {
+  background: #555;
+}
+.server-buttons button.active {
+  background: #e50914;
+}
 </style>
 </head>
 
@@ -243,8 +266,36 @@ nav a:hover { color:#e50914; }
     <div class="card-info">2025</div>
   </div>
 
+  <div class="card" onclick="showEpisodes('mashbouh')">
+  <img src="images/mashbouh.jpg" alt="المشبوه">
+  <div class="card-title">المشبوه</div>
+  <div class="card-info">2025</div>
 </div>
 
+</div>
+
+<!-- ---------------- TURKISH SERIES ---------------- -->
+<h2 class="section-title">Turkish Series</h2>
+<div class="series-row">
+
+  <div class="card" onclick="showEpisodes('المدينة البعيدة')">
+    <img src="images/madina.jpg" alt="المدينة البعيدة">
+    <div class="card-title">المدينة البعيدة</div>
+    <div class="card-info">الموسم الثاني </div>
+  </div>
+
+  <div class="card" onclick="showEpisodes('حلم أشرف')">
+  <img src="images/ashraf.jpg" alt="حلم أشرف">
+  <div class="card-title">حلم أشرف</div>
+  <div class="card-info">2025</div>
+</div>
+  <div class="card" onclick="showEpisodes('ورود وذنوب')">
+  <img src="images/worod.jpg" alt="ورود وذنوب">
+  <div class="card-title">ورود وذنوب</div>
+  <div class="card-info">2025</div>
+</div>
+
+</div>
 <!-- ---------------- MATCH LIVE ---------------- -->
 <h2 class="section-title">Match Live</h2>
 <div class="series-row">
@@ -264,7 +315,7 @@ nav a:hover { color:#e50914; }
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>Match Live — Diffusions en Direct</h2>
 
-  <div class="episode" onclick="openEpisode('https://www.elahmad.com/tv/algeria_live.php?id=entv_algerie')">
+  <div class="episode" onclick="openEpisode(['https://www.elahmad.com/tv/algeria_live.php?id=entv_algerie', 'https://example.com/server2/live.php?id=entv_algerie', 'https://example.com/server3/live.php?id=entv_algerie'])">
     <h3>Match 1 — Algérie vs Arabie saoudi</h3>
   </div>
 </div>
@@ -274,13 +325,13 @@ nav a:hover { color:#e50914; }
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>La Bataille — 2025</h2>
 
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-sy4elb7c5dva.html')"><h3>Épisode 1</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-6phr26j84iqc.html')"><h3>Épisode 2</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-yjo4ylpd3uok.html')"><h3>Épisode 3</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-l8o1r35ulst3.html')"><h3>Épisode 4</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-cz3zka8tfxk9.html')"><h3>Épisode 5</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-lkcaskb9ldk7.html')"><h3>Épisode 6</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-klkck2revvrl.html')"><h3>Épisode 7</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-sy4elb7c5dva.html', 'https://vidmoly.net/embed-sy4elb7c5dva.html', 'https://streamtape.com/e/sy4elb7c5dva/'])"><h3>Épisode 1</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-6phr26j84iqc.html', 'https://vidmoly.net/embed-6phr26j84iqc.html', 'https://streamtape.com/e/6phr26j84iqc/'])"><h3>Épisode 2</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-yjo4ylpd3uok.html', 'https://vidmoly.net/embed-yjo4ylpd3uok.html', 'https://streamtape.com/e/yjo4ylpd3uok/'])"><h3>Épisode 3</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-l8o1r35ulst3.html', 'https://vidmoly.net/embed-l8o1r35ulst3.html', 'https://streamtape.com/e/l8o1r35ulst3/'])"><h3>Épisode 4</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-cz3zka8tfxk9.html', 'https://vidmoly.net/embed-cz3zka8tfxk9.html', 'https://streamtape.com/e/cz3zka8tfxk9/'])"><h3>Épisode 5</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-lkcaskb9ldk7.html', 'https://vidmoly.net/embed-lkcaskb9ldk7.html', 'https://streamtape.com/e/lkcaskb9ldk7/'])"><h3>Épisode 6</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-klkck2revvrl.html', 'https://vidmoly.net/embed-klkck2revvrl.html', 'https://streamtape.com/e/klkck2revvrl/'])"><h3>Épisode 7</h3></div>
 </div>
 
 <!-- Le Cerveau -->
@@ -288,13 +339,13 @@ nav a:hover { color:#e50914; }
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>Le Cerveau — 2025</h2>
 
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-qsu9x4yler9f.html')"><h3>Épisode 1</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-3kpy7r69n97b.html')"><h3>Épisode 2</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-cm9zn7dv28lr.html')"><h3>Épisode 3</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-vtgg8wcvnivi.html')"><h3>Épisode 4</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-b02zafo5w0zu.html')"><h3>Épisode 5</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-5zm6if99i0e7.html')"><h3>Épisode 6</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-toajyxe71ln0.html')"><h3>Épisode 7</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-qsu9x4yler9f.html', 'https://vidmoly.net/embed-qsu9x4yler9f.html', 'https://streamtape.com/e/qsu9x4yler9f/'])"><h3>Épisode 1</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-3kpy7r69n97b.html', 'https://vidmoly.net/embed-3kpy7r69n97b.html', 'https://streamtape.com/e/3kpy7r69n97b/'])"><h3>Épisode 2</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-cm9zn7dv28lr.html', 'https://vidmoly.net/embed-cm9zn7dv28lr.html', 'https://streamtape.com/e/cm9zn7dv28lr/'])"><h3>Épisode 3</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-vtgg8wcvnivi.html', 'https://vidmoly.net/embed-vtgg8wcvnivi.html', 'https://streamtape.com/e/vtgg8wcvnivi/'])"><h3>Épisode 4</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-b02zafo5w0zu.html', 'https://vidmoly.net/embed-b02zafo5w0zu.html', 'https://streamtape.com/e/b02zafo5w0zu/'])"><h3>Épisode 5</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-5zm6if99i0e7.html', 'https://vidmoly.net/embed-5zm6if99i0e7.html', 'https://streamtape.com/e/5zm6if99i0e7/'])"><h3>Épisode 6</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-toajyxe71ln0.html', 'https://vidmoly.net/embed-toajyxe71ln0.html', 'https://streamtape.com/e/toajyxe71ln0/'])"><h3>Épisode 7</h3></div>
 </div>
 
 <!-- La Villa -->
@@ -302,7 +353,7 @@ nav a:hover { color:#e50914; }
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>La Villa des Cœurs Brisés 2025</h2>
 
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-sy4elb7c5dva.html')"><h3>Épisode 1</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-sy4elb7c5dva.html', 'https://vidmoly.net/embed-sy4elb7c5dva.html', 'https://streamtape.com/e/sy4elb7c5dva/'])"><h3>Épisode 1</h3></div>
 </div>
 
 <!-- Les Cinquante -->
@@ -320,13 +371,62 @@ nav a:hover { color:#e50914; }
   <div class="back-btn" onclick="goBack()">← Retour</div>
   <h2>ورد و شكولاطة — 2025</h2>
 
-  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-1lvffkxkg1se.html')"><h3>Épisode 1</h3></div>
-  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-btiaep8sjnhr.html')"><h3>Épisode 2</h3></div>
-  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-paarljdk98ep.html')"><h3>Épisode 3</h3></div>
-  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-h5epigmcltju.html')"><h3>Épisode 4</h3></div>
-  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-z8z0p0xer8am.html')"><h3>Épisode 5</h3></div>
-  <div class="episode" onclick="openEpisode('https://vidmoly.net/embed-ccs0pn24f34i.html')"><h3>Épisode 6</h3></div>
-  <div class="episode" onclick="openEpisode('https://uqload.cx/embed-toajyxe71ln0.html')"><h3>Épisode 7</h3></div>
+  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-1lvffkxkg1se.html', 'https://uqload.cx/embed-1lvffkxkg1se.html', 'https://streamtape.com/e/1lvffkxkg1se/'])"><h3>Épisode 1</h3></div>
+  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-btiaep8sjnhr.html', 'https://uqload.cx/embed-btiaep8sjnhr.html', 'https://streamtape.com/e/btiaep8sjnhr/'])"><h3>Épisode 2</h3></div>
+  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-paarljdk98ep.html', 'https://uqload.cx/embed-paarljdk98ep.html', 'https://streamtape.com/e/paarljdk98ep/'])"><h3>Épisode 3</h3></div>
+  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-h5epigmcltju.html', 'https://uqload.cx/embed-h5epigmcltju.html', 'https://streamtape  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-z8z0p0xer8am.html', 'https://uqload.cx/embed-z8z0p0xer8am.html', 'https://streamtape.com/e/z8z0p0xer8am/'])"><h3>Épisode 5</h3></div>
+  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-ccs0pn24f34i.html', 'https://uqload.cx/embed-ccs0pn24f34i.html', 'https://streamtape.com/e/ccs0pn24f34i/'])"><h3>Épisode 6</h3></div>
+  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-toajyxe71ln0.html', 'https://vidmoly.net/embed-toajyxe71ln0.html', 'https://streamtape.com/e/toajyxe71ln0/'])"><h3>Épisode 7</h3></div>
+</div>
+
+<!-- سلمى -->
+<div id="Salma" class="episodes-section">
+  <div class="back-btn" onclick="goBack()">← Retour</div>
+  <h2>سلمى — 2025</h2>
+  <!-- Aucun épisode fourni dans le code original, ajouter des placeholders si nécessaire -->
+</div>
+
+<!-- المشبوه -->
+<div id="mashbouh" class="episodes-section">
+  <div class="back-btn" onclick="goBack()">← Retour</div>
+  <h2>المشبوه — 2025</h2>
+
+  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-1lvffkxkg1se.html', 'https://uqload.cx/embed-1lvffkxkg1se.html', 'https://streamtape.com/e/1lvffkxkg1se/'])"><h3>Épisode 1</h3></div>
+
+</div>
+
+<!-- المدينة البعيدة  -->
+<div id="المدينة البعيدة" class="episodes-section">
+  <div class="back-btn" onclick="goBack()">← Retour</div>
+  <h2>المدينة البعيدة — 2025</h2>
+
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/dirilis-ep1', 'https://example.com/server2/dirilis-ep1'])"><h3>Épisode 1</h3></div>
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/dirilis-ep2', 'https://example.com/server2/dirilis-ep2'])"><h3>Épisode 2</h3></div>
+
+</div>
+
+<!-- حلم أشرف -->
+<div id="حلم أشرف" class="episodes-section">
+  <div class="back-btn" onclick="goBack()">← Retour</div>
+  <h2>حلم أشرف — 2025</h2>
+
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep1', 'https://example.com/server2/helmachraf-ep1'])"><h3>Épisode 1</h3></div>
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep2', 'https://example.com/server2/helmachraf-ep2'])"><h3>Épisode 2</h3></div>
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep3', 'https://example.com/server2/helmachraf-ep3'])"><h3>Épisode 3</h3></div>
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep4', 'https://example.com/server2/helmachraf-ep4'])"><h3>Épisode 4</h3></div>
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep5', 'https://example.com/server2/helmachraf-ep5'])"><h3>Épisode 5</h3></div>
+</div>
+
+<!-- ورود وذنوب -->
+<div id="ورود وذنوب" class="episodes-section">
+  <div class="back-btn" onclick="goBack()">← Retour</div>
+  <h2>ورود وذنوب — 2025</h2>
+
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep1', 'https://example.com/server2/helmachraf-ep1'])"><h3>Épisode 1</h3></div>
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep2', 'https://example.com/server2/helmachraf-ep2'])"><h3>Épisode 2</h3></div>
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep3', 'https://example.com/server2/helmachraf-ep3'])"><h3>Épisode 3</h3></div>
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep4', 'https://example.com/server2/helmachraf-ep4'])"><h3>Épisode 4</h3></div>
+  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep5', 'https://example.com/server2/helmachraf-ep5'])"><h3>Épisode 5</h3></div>
 </div>
 
 <!-- Pop-up lecteur vidéo -->
@@ -352,7 +452,7 @@ function goBack(){
 }
 
 // ---------- Ouvre une POPUP ----------
-function openEpisode(url, isVideo = false) {
+function openEpisode(urls, isVideo = false) {
   const modal = document.getElementById("videoModal");
   const container = document.getElementById("videoContainer");
 
@@ -361,14 +461,26 @@ function openEpisode(url, isVideo = false) {
   if (isVideo) {
     container.innerHTML = `
       <video controls autoplay>
-        <source src="${url}" type="video/mp4">
+        <source src="${urls}" type="video/mp4">
       </video>
     `;
   } else {
-    container.innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
+    let buttons = '<div class="server-buttons">';
+    urls.forEach((url, index) => {
+      buttons += `<button onclick="loadServer('${url}', this)">Serveur ${index + 1}</button>`;
+    });
+    buttons += '</div>';
+    container.innerHTML = buttons + '<iframe id="videoFrame" src="' + urls[0] + '" allowfullscreen></iframe>';
   }
 
   modal.style.display = "flex";
+}
+
+function loadServer(url, button) {
+  document.getElementById('videoFrame').src = url;
+  // Optionnel : mettre en surbrillance le bouton actif
+  document.querySelectorAll('.server-buttons button').forEach(btn => btn.classList.remove('active'));
+  button.classList.add('active');
 }
 
 // ---------- Fermer la pop-up ----------
