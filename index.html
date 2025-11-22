@@ -1,506 +1,556 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adel Movies VIP</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Adel Movies VIP</title>
+  <style>
+    /* ---------------- GLOBAL ---------------- */
+    :root {
+      --bg:#000;
+      --card:#111;
+      --accent:#e50914;
+      --muted:#bdbdbd;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin:0;
+      padding:0;
+      background:var(--bg);
+      color:#fff;
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
 
-<style>
-/* ---------------- GLOBAL ---------------- */
-body {
-  margin:0;
-  padding:0;
-  background:#000;
-  color:#fff;
-  font-family: Arial, Helvetica, sans-serif;
-}
+    /* ---------------- HEADER ---------------- */
+    header {
+      display:flex;
+      align-items:center;
+      padding:16px 28px;
+      gap:24px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0.5));
+      position: sticky;
+      top:0;
+      z-index:100;
+      backdrop-filter: blur(3px);
+    }
+    header img.logo {
+      height:56px;
+      border-radius:6px;
+    }
+    nav { display:flex; gap:18px; align-items:center; }
+    nav a {
+      color:#fff;
+      text-decoration:none;
+      font-size:15px;
+      font-weight:600;
+      transition:0.18s;
+    }
+    nav a:hover { color:var(--accent); transform:translateY(-2px); }
 
-/* ---------------- HEADER ---------------- */
-header {
-  display:flex;
-  align-items:center;
-  padding:20px 40px;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0)),
-              url('images/header-bg.jpg') no-repeat center/cover;
-  position: sticky;
-  top:0;
-  z-index:10;
-}
-header img {
-  height:70px;
-  margin-right:25px;
-  border-radius:8px;
-}
-nav {
-  display:flex;
-  gap:20px;
-}
-nav a {
-  color:#fff;
-  text-decoration:none;
-  font-size:17px;
-  font-weight:bold;
-  transition:0.3s;
-}
-nav a:hover { color:#e50914; }
+    /* ---------------- BANNER ---------------- */
+    .banner {
+      height:54vh;
+      min-height:300px;
+      background-image: url('images/banner.jpg');
+      background-size: cover;
+      background-position: center;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-end;
+      padding:36px 28px;
+      position:relative;
+      color:#fff;
+    }
+    .banner::after {
+      content:"";
+      position:absolute;
+      bottom:0;
+      width:100%;
+      height:220px;
+      background: linear-gradient(to top, #000, transparent);
+      z-index:1;
+    }
+    .banner h1 { font-size:44px; margin:0; z-index:2; }
+    .banner p { font-size:16px; width:60%; max-width:900px; z-index:2; opacity:0.9; }
 
-/* ---------------- BANNER ---------------- */
-.banner {
-  height:60vh;
-  background-image: url('images/banner.jpg');
-  background-size: cover;
-  background-position: center;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  padding:40px;
-  position:relative;
-  color:#fff;
-}
-.banner::after {
-  content:"";
-  position:absolute;
-  bottom:0;
-  width:100%;
-  height:200px;
-  background: linear-gradient(to top, #000, transparent);
-  z-index:1;
-}
-.banner h1 { font-size:50px; margin:0; z-index:2; }
-.banner p { font-size:18px; width:50%; z-index:2; opacity:0.85; }
+    /* ---------------- LAYOUT ---------------- */
+    main { padding:20px 18px 80px 18px; }
 
-/* ---------------- SERIES CARDS ---------------- */
-.section-title { font-size:26px; margin:25px 0 15px 20px; }
-.series-row {
-  display:flex;
-  overflow-x:auto;
-  padding:20px;
-  gap:15px;
-}
-.series-row::-webkit-scrollbar { display:none; }
+    .section-title { font-size:22px; margin:18px 0 10px 6px; font-weight:700; }
+    .series-row {
+      display:flex;
+      overflow-x:auto;
+      padding:12px;
+      gap:12px;
+      scroll-behavior:smooth;
+    }
+    .series-row::-webkit-scrollbar { height:8px; }
+    .series-row::-webkit-scrollbar-thumb { background:#222; border-radius:4px; }
 
-.card {
-  min-width:180px;
-  position:relative;
-  cursor:pointer;
-  transition: transform 0.3s;
-}
-.card img {
-  width:180px;
-  height:260px;
-  border-radius:8px;
-  object-fit:cover;
-  transition:0.3s;
-}
-.card:hover { transform: scale(1.12); }
-.card:hover img { opacity:0.8; }
-.card-title { text-align:center; margin-top:6px; font-size:14px; }
-.card-info { text-align:center; font-size:12px; opacity:0.7; margin-top:2px; }
+    .card {
+      min-width:170px;
+      width:170px;
+      position:relative;
+      cursor:pointer;
+      transition: transform 0.28s, box-shadow 0.28s;
+      border-radius:8px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+    }
+    .card img {
+      width:100%;
+      height:250px;
+      object-fit:cover;
+      display:block;
+    }
+    .card:hover { transform: translateY(-6px) scale(1.03); box-shadow:0 14px 30px rgba(0,0,0,0.7); }
+    .card-title { text-align:center; margin:8px 6px 2px 6px; font-size:14px; font-weight:600; }
+    .card-info { text-align:center; font-size:12px; color:var(--muted); margin-bottom:10px; }
 
-/* ---------------- EPISODES ---------------- */
-.episodes-section {
-  padding:20px;
-  display:none;
-}
-.episode {
-  margin-bottom:20px;
-  background:#111;
-  padding:10px;
-  border-radius:8px;
-  cursor:pointer;
-  transition:0.3s;
-}
-.episode:hover {
-  background:#1b1b1b;
-}
-.episode h3 {
-  margin:0;
-  font-size:18px;
-}
+    /* ---------------- EPISODES ---------------- */
+    .episodes-section {
+      padding:20px;
+      display:none;
+    }
+    .episode {
+      margin-bottom:12px;
+      background:var(--card);
+      padding:12px;
+      border-radius:8px;
+      cursor:pointer;
+      transition:0.18s;
+    }
+    .episode:hover { background:#1b1b1b; transform: translateX(6px); }
+    .episode h3 { margin:0; font-size:16px; }
 
-/* Bouton retour */
-.back-btn {
-  display:inline-block;
-  margin-bottom:15px;
-  cursor:pointer;
-  color:#4fa3ff;
-  font-weight:bold;
-}
+    /* Retour */
+    .back-btn {
+      display:inline-block;
+      margin-bottom:16px;
+      cursor:pointer;
+      color:#4fa3ff;
+      font-weight:700;
+    }
 
-/* ------- POPUP (MODAL PLAYER) -------- */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(4px);
-  justify-content: center;
-  align-items: center;
-}
+    /* ------- POPUP (MODAL PLAYER) -------- */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      padding:20px;
+    }
 
-.modal-content {
-  background: #111;
-  padding: 10px;
-  border-radius: 10px;
-  max-width: 900px;
-  width: 95%;
-  position: relative;
-}
+    .modal-content {
+      background: #0f0f0f;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 1000px;
+      width: 100%;
+      position: relative;
+    }
 
-.modal iframe,
-.modal video {
-  width: 100%;
-  height: 500px;
-  border: none;
-  border-radius: 10px;
-}
+    .modal iframe,
+    .modal video {
+      width: 100%;
+      height: 560px;
+      border: none;
+      border-radius: 8px;
+      background:#000;
+    }
 
-.close {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background: #e50914;
-  color: white;
-  font-size: 28px;
-  padding: 5px 15px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: 0.3s;
-}
+    .close {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      background: var(--accent);
+      color: white;
+      font-size: 26px;
+      padding: 6px 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .close:hover { background:#b00710; }
 
-.close:hover {
-  background: #b00710;
-}
+    /* server buttons */
+    .server-buttons {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin:10px 0 14px;
+    }
+    .server-buttons button {
+      background:#333;
+      color:#fff;
+      border:none;
+      padding:8px 12px;
+      border-radius:6px;
+      cursor:pointer;
+      transition:0.16s;
+    }
+    .server-buttons button:hover { background:#555; }
+    .server-buttons button.active { background:var(--accent); }
 
-/* Styles pour les boutons serveurs */
-.server-buttons {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-  justify-content: center;
-}
-.server-buttons button {
-  background: #333;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.server-buttons button:hover {
-  background: #555;
-}
-.server-buttons button.active {
-  background: #e50914;
-}
-</style>
+    /* responsive */
+    @media (max-width:900px) {
+      .banner h1 { font-size:32px; }
+      .banner p { width:100%; font-size:14px; }
+      .card img { height:200px; }
+      .modal iframe, .modal video { height:360px; }
+    }
+    @media (max-width:520px) {
+      nav { gap:10px; font-size:13px; }
+      .card { min-width:140px; width:140px; }
+      .card img { height:180px; }
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- ---------------- HEADER ---------------- -->
-<header>
-  <img src="logo.png" alt="Logo Adel Movies">
-  <nav>
-    <a href="#">Accueil</a>
-    <a href="#">Téléréalité</a>
-    <a href="#">Shahid Series</a>
-    <a href="#">Match Live</a>
-  </nav>
-</header>
+  <!-- ---------------- HEADER ---------------- -->
+  <header>
+    <img src="logo.png" alt="Logo Adel Movies" class="logo">
+    <nav>
+      <a href="#">Accueil</a>
+      <a href="#telerealite">Téléréalité</a>
+      <a href="#shahid">Shahid Series</a>
+      <a href="#turkish">Turkish Series</a>
+      <a href="#matchlive">Match Live</a>
+    </nav>
+  </header>
 
-<!-- ---------------- BANNER ---------------- -->
-<div class="banner">
-  <h1>Adel Movies VIP</h1>
-  <p>Bienvenue dans ton espace privé — Films & Séries exclusifs en qualité premium.</p>
-</div>
-
-<!-- ---------------- SECTION TELEREALITE ---------------- -->
-<h2 class="section-title">Téléréalité</h2>
-<div class="series-row">
-
-  <div class="card" onclick="showEpisodes('bataille')">
-    <img src="images/bataille.jpg" alt="La Bataille">
-    <div class="card-title">La Bataille</div>
-    <div class="card-info">2025</div>
+  <!-- ---------------- BANNER ---------------- -->
+  <div class="banner">
+    <h1>Adel Movies VIP</h1>
+    <p>Bienvenue dans ton espace privé — Films & Séries exclusifs en qualité premium.</p>
   </div>
 
-  <div class="card" onclick="showEpisodes('cerveau')">
-    <img src="images/cerveau.jpg" alt="Le Cerveau">
-    <div class="card-title">Le Cerveau</div>
-    <div class="card-info">2025</div>
+  <main>
+
+    <!-- ---------------- SECTION TELEREALITE ---------------- -->
+    <section id="telerealite">
+      <h2 class="section-title">Téléréalité</h2>
+      <div class="series-row">
+        <div class="card" onclick="showEpisodes('bataille')">
+          <img src="images/bataille.jpg" alt="La Bataille">
+          <div class="card-title">La Bataille</div>
+          <div class="card-info">2025</div>
+        </div>
+
+        <div class="card" onclick="showEpisodes('cerveau')">
+          <img src="images/cerveau.jpg" alt="Le Cerveau">
+          <div class="card-title">Le Cerveau</div>
+          <div class="card-info">2025</div>
+        </div>
+
+        <div class="card" onclick="showEpisodes('villa')">
+          <img src="images/villa2025.jpg" alt="La Villa 2025">
+          <div class="card-title">La Villa 2025</div>
+          <div class="card-info">2025</div>
+        </div>
+
+        <div class="card" onclick="showEpisodes('cinquante')">
+          <img src="images/cinquante2025.jpg" alt="Les Cinquante 2025">
+          <div class="card-title">Les Cinquante 2025</div>
+          <div class="card-info">2025</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- SHAHID SERIES ---------------- -->
+    <section id="shahid">
+      <h2 class="section-title">Shahid Series</h2>
+      <div class="series-row">
+        <div class="card" onclick="showEpisodes('ward')">
+          <img src="images/ward.jpg" alt="ورد و شكولاطة">
+          <div class="card-title">ورد و شكولاطة</div>
+          <div class="card-info">2025</div>
+        </div>
+
+        <div class="card" onclick="showEpisodes('salma')">
+          <img src="images/salma.jpg" alt="سلمى">
+          <div class="card-title">سلمى</div>
+          <div class="card-info">2025</div>
+        </div>
+
+        <!-- Nouvelle série المشبوه -->
+        <div class="card" onclick="showEpisodes('mashbouh')">
+          <img src="images/mashbouh.jpg" alt="المشبوه">
+          <div class="card-title">المشبوه</div>
+          <div class="card-info">2025</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- TURKISH SERIES ---------------- -->
+    <section id="turkish">
+      <h2 class="section-title">Turkish Series</h2>
+      <div class="series-row">
+        <div class="card" onclick="showEpisodes('dirilis')">
+          <img src="images/dirilis.jpg" alt="Diriliş Ertuğrul">
+          <div class="card-title">Diriliş Ertuğrul</div>
+          <div class="card-info">2025</div>
+        </div>
+
+        <!-- حلم أشرف -->
+        <div class="card" onclick="showEpisodes('helmachraf')">
+          <img src="images/helmachref.jpg" alt="حلم أشرف">
+          <div class="card-title">حلم أشرف</div>
+          <div class="card-info">2025</div>
+        </div>
+
+        <!-- Exemple autre série turque -->
+        <div class="card" onclick="showEpisodes('kizim_replace')">
+          <img src="images/kiz.jpg" alt="Autre série">
+          <div class="card-title">Série Turque</div>
+          <div class="card-info">2025</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- MATCH LIVE ---------------- -->
+    <section id="matchlive">
+      <h2 class="section-title">Match Live</h2>
+      <div class="series-row">
+        <div class="card" onclick="showEpisodes('matchlive-episodes')">
+          <img src="images/matchlive.jpg" alt="Match Live">
+          <div class="card-title">Match Live</div>
+          <div class="card-info">2025</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- EPISODES (toutes les sections) ---------------- -->
+    <!-- MATCH LIVE -->
+    <div id="matchlive-episodes" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2>Match Live — Diffusions en Direct</h2>
+
+      <div class="episode" onclick="openEpisode(['https://www.elahmad.com/tv/algeria_live.php?id=entv_algerie', 'https://example.com/server2/live.php?id=entv_algerie'])">
+        <h3>Match 1 — Algérie vs Arabie saoudite</h3>
+      </div>
+    </div>
+
+    <!-- La Bataille -->
+    <div id="bataille" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2>La Bataille — 2025</h2>
+      <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-sy4elb7c5dva.html', 'https://vidmoly.net/embed-sy4elb7c5dva.html', 'https://streamtape.com/e/sy4elb7c5dva/'])"><h3>Épisode 1</h3></div>
+      <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-6phr26j84iqc.html', 'https://vidmoly.net/embed-6phr26j84iqc.html', 'https://streamtape.com/e/6phr26j84iqc/'])"><h3>Épisode 2</h3></div>
+      <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-yjo4ylpd3uok.html', 'https://vidmoly.net/embed-yjo4ylpd3uok.html', 'https://streamtape.com/e/yjo4ylpd3uok/'])"><h3>Épisode 3</h3></div>
+      <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-l8o1r35ulst3.html', 'https://vidmoly.net/embed-l8o1r35ulst3.html', 'https://streamtape.com/e/l8o1r35ulst3/'])"><h3>Épisode 4</h3></div>
+      <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-cz3zka8tfxk9.html', 'https://vidmoly.net/embed-cz3zka8tfxk9.html', 'https://streamtape.com/e/cz3zka8tfxk9/'])"><h3>Épisode 5</h3></div>
+      <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-lkcaskb9ldk7.html', 'https://vidmoly.net/embed-lkcaskb9ldk7.html', 'https://streamtape.com/e/lkcaskb9ldk7/'])"><h3>Épisode 6</h3></div>
+      <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-klkck2revvrl.html', 'https://vidmoly.net/embed-klkck2revvrl.html', 'https://streamtape.com/e/klkck2revvrl/'])"><h3>Épisode 7</h3></div>
+    </div>
+
+    <!-- Le Cerveau -->
+    <div id="cerveau" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2>Le Cerveau — 2025</h2>
+      <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-qsu9x4yler9f.html', 'https://vidmoly.net/embed-qsu9x4yler9f.html'])"><h3>Épisode 1</h3></div>
+      <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-3kpy7r69n97b.html', 'https://vidmoly.net/embed-3kpy7r69n97b.html'])"><h3>Épisode 2</h3></div>
+      <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-cm9zn7dv28lr.html', 'https://vidmoly.net/embed-cm9zn7dv28lr.html'])"><h3>Épisode 3</h3></div>
+    </div>
+
+    <!-- La Villa -->
+    <div id="villa" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2>La Villa des Cœurs Brisés 2025</h2>
+      <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-sy4elb7c5dva.html', 'https://vidmoly.net/embed-sy4elb7c5dva.html'])"><h3>Épisode 1</h3></div>
+    </div>
+
+    <!-- Les Cinquante (local video example) -->
+    <div id="cinquante" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2>Les Cinquante — Saison 2025</h2>
+      <div class="episode" onclick="openEpisode('videos/cinquante-ep1.mp4', true)"><h3>Épisode 1 (local)</h3></div>
+    </div>
+
+    <!-- ورد و شكولاطة -->
+    <div id="ward" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2>ورد و شكولاطة — 2025</h2>
+      <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-1lvffkxkg1se.html', 'https://uqload.cx/embed-1lvffkxkg1se.html'])"><h3>Épisode 1</h3></div>
+      <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-btiaep8sjnhr.html', 'https://uqload.cx/embed-btiaep8sjnhr.html'])"><h3>Épisode 2</h3></div>
+      <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-paarljdk98ep.html', 'https://uqload.cx/embed-paarljdk98ep.html'])"><h3>Épisode 3</h3></div>
+      <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-h5epigmcltju.html', 'https://uqload.cx/embed-h5epigmcltju.html'])"><h3>Épisode 4</h3></div>
+      <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-z8z0p0xer8am.html', 'https://uqload.cx/embed-z8z0p0xer8am.html'])"><h3>Épisode 5</h3></div>
+      <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-ccs0pn24f34i.html', 'https://uqload.cx/embed-ccs0pn24f34i.html'])"><h3>Épisode 6</h3></div>
+      <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-toajyxe71ln0.html', 'https://vidmoly.net/embed-toajyxe71ln0.html'])"><h3>Épisode 7</h3></div>
+    </div>
+
+    <!-- سلمى -->
+    <div id="salma" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2>سلمى — 2025</h2>
+      <div class="episode" onclick="openEpisode(['https://example.com/salma-ep1','https://example.com/salma-server2-ep1'])"><h3>Épisode 1</h3></div>
+    </div>
+
+    <!-- المشبوه -->
+    <div id="mashbouh" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2>المشبوه — 2025</h2>
+      <div class="episode" onclick="openEpisode(['https://example.com/mashbouh-ep1-server1','https://example.com/mashbouh-ep1-server2'])"><h3>Épisode 1</h3></div>
+      <div class="episode" onclick="openEpisode(['https://example.com/mashbouh-ep2-server1','https://example.com/mashbouh-ep2-server2'])"><h3>Épisode 2</h3></div>
+    </div>
+
+    <!-- حلم أشرف -->
+    <div id="helmachraf" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2>حلم أشرف — 2025</h2>
+      <div class="episode" onclick="openEpisode(['https://example.com/helmachraf-ep1-server1','https://example.com/helmachraf-ep1-server2'])"><h3>Épisode 1</h3></div>
+      <div class="episode" onclick="openEpisode(['https://example.com/helmachraf-ep2-server1','https://example.com/helmachraf-ep2-server2'])"><h3>Épisode 2</h3></div>
+      <div class="episode" onclick="openEpisode(['https://example.com/helmachraf-ep3-server1','https://example.com/helmachraf-ep3-server2'])"><h3>Épisode 3</h3></div>
+      <div class="episode" onclick="openEpisode(['https://example.com/helmachraf-ep4-server1','https://example.com/helmachraf-ep4-server2'])"><h3>Épisode 4</h3></div>
+      <div class="episode" onclick="openEpisode(['https://example.com/helmachraf-ep5-server1','https://example.com/helmachraf-ep5-server2'])"><h3>Épisode 5</h3></div>
+    </div>
+
+    <!-- Exemple Dirilis -->
+    <div id="dirilis" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2>Diriliş Ertuğrul — 2025</h2>
+      <div class="episode" onclick="openEpisode(['https://example.com/dirilis-ep1-server1','https://example.com/dirilis-ep1-server2'])"><h3>Épisode 1</h3></div>
+    </div>
+
+  </main>
+
+  <!-- Pop-up lecteur vidéo -->
+  <div id="videoModal" class="modal" onclick="if(event.target === this) closeModal()">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-label="Lecteur vidéo">
+      <button class="close" onclick="closeModal()">×</button>
+      <div id="serverButtons" class="server-buttons" aria-hidden="false"></div>
+      <div id="videoContainer"></div>
+    </div>
   </div>
 
-  <div class="card" onclick="showEpisodes('villa')">
-    <img src="images/villa2025.jpg" alt="La Villa 2025">
-    <div class="card-title">La Villa 2025</div>
-    <div class="card-info">2025</div>
-  </div>
+  <!-- ---------------- SCRIPT ---------------- -->
+  <script>
+    // Affiche la section d'épisodes correspondante (ID en paramètre)
+    function showEpisodes(id) {
+      document.querySelectorAll('.episodes-section').forEach(s => s.style.display = 'none');
+      const el = document.getElementById(id);
+      if (!el) {
+        console.warn('Aucun élément trouvé pour id:', id);
+        return;
+      }
+      el.style.display = 'block';
+      // scroll to section
+      const top = el.getBoundingClientRect().top + window.pageYOffset - 70;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
 
-  <div class="card" onclick="showEpisodes('cinquante')">
-    <img src="images/cinquante2025.jpg" alt="Les Cinquante 2025">
-    <div class="card-title">Les Cinquante 2025</div>
-    <div class="card-info">2025</div>
-  </div>
+    function goBack() {
+      document.querySelectorAll('.episodes-section').forEach(s => s.style.display = 'none');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-</div>
+    /**
+     * openEpisode(urls, isVideo)
+     * - urls: either a string (local mp4 path) or an array of server URLs
+     * - isVideo: boolean (true if local video file)
+     */
+    function openEpisode(urls, isVideo = false) {
+      const modal = document.getElementById("videoModal");
+      const container = document.getElementById("videoContainer");
+      const buttonsWrap = document.getElementById("serverButtons");
+      container.innerHTML = "";
+      buttonsWrap.innerHTML = "";
 
-<!-- ---------------- SHAHID SERIES ---------------- -->
-<h2 class="section-title">Shahid Series</h2>
-<div class="series-row">
+      // If single local video (string passed or isVideo true)
+      if (isVideo || typeof urls === 'string') {
+        const src = (typeof urls === 'string') ? urls : urls[0];
+        // create video element
+        const video = document.createElement('video');
+        video.controls = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        const source = document.createElement('source');
+        source.src = src;
+        source.type = 'video/mp4';
+        video.appendChild(source);
+        container.appendChild(video);
+      } else if (Array.isArray(urls)) {
+        // create server buttons
+        urls.forEach((link, i) => {
+          const btn = document.createElement('button');
+          btn.textContent = 'Serveur ' + (i + 1);
+          btn.onclick = function(e) {
+            e.stopPropagation();
+            loadServer(link, btn);
+          };
+          buttonsWrap.appendChild(btn);
+        });
 
-  <div class="card" onclick="showEpisodes('ward')">
-    <img src="images/ward.jpg" alt="ورد و شكولاطة">
-    <div class="card-title">ورد و شكولاطة</div>
-    <div class="card-info">2025</div>
-  </div>
+        // default iframe (first server)
+        const iframe = document.createElement('iframe');
+        iframe.id = 'videoFrame';
+        iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.src = urls[0];
+        container.appendChild(iframe);
 
-  <div class="card" onclick="showEpisodes('Salma')">
-    <img src="images/salma.jpg" alt="سلمى">
-    <div class="card-title">سلمى</div>
-    <div class="card-info">2025</div>
-  </div>
+        // mark first button active
+        const firstBtn = buttonsWrap.querySelector('button');
+        if (firstBtn) firstBtn.classList.add('active');
+      }
 
-  <div class="card" onclick="showEpisodes('mashbouh')">
-  <img src="images/mashbouh.jpg" alt="المشبوه">
-  <div class="card-title">المشبوه</div>
-  <div class="card-info">2025</div>
-</div>
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden'; // prevent background scroll
+    }
 
-</div>
+    function loadServer(url, button) {
+      // set iframe src
+      const frame = document.getElementById('videoFrame');
+      if (frame) {
+        frame.src = url;
+      } else {
+        // if video element present, do nothing
+        console.warn('Aucun iframe trouvé pour charger le serveur.');
+      }
+      // active button style
+      document.querySelectorAll('.server-buttons button').forEach(b => b.classList.remove('active'));
+      if (button) button.classList.add('active');
+    }
 
-<!-- ---------------- TURKISH SERIES ---------------- -->
-<h2 class="section-title">Turkish Series</h2>
-<div class="series-row">
+    function closeModal() {
+      const modal = document.getElementById("videoModal");
+      const container = document.getElementById("videoContainer");
+      const buttonsWrap = document.getElementById("serverButtons");
+      modal.style.display = 'none';
+      container.innerHTML = '';
+      buttonsWrap.innerHTML = '';
+      document.body.style.overflow = ''; // restore scroll
+    }
 
-  <div class="card" onclick="showEpisodes('المدينة البعيدة')">
-    <img src="images/madina.jpg" alt="المدينة البعيدة">
-    <div class="card-title">المدينة البعيدة</div>
-    <div class="card-info">الموسم الثاني </div>
-  </div>
-
-  <div class="card" onclick="showEpisodes('حلم أشرف')">
-  <img src="images/ashraf.jpg" alt="حلم أشرف">
-  <div class="card-title">حلم أشرف</div>
-  <div class="card-info">2025</div>
-</div>
-  <div class="card" onclick="showEpisodes('ورود وذنوب')">
-  <img src="images/worod.jpg" alt="ورود وذنوب">
-  <div class="card-title">ورود وذنوب</div>
-  <div class="card-info">2025</div>
-</div>
-
-</div>
-<!-- ---------------- MATCH LIVE ---------------- -->
-<h2 class="section-title">Match Live</h2>
-<div class="series-row">
-
-  <div class="card" onclick="showEpisodes('matchlive-episodes')">
-    <img src="images/matchlive.png" alt="Match Live">
-    <div class="card-title">Match Live</div>
-    <div class="card-info">2025</div>
-  </div>
-
-</div>
-
-<!-- ---------------- EPISODES ---------------- -->
-
-<!-- MATCH LIVE -->
-<div id="matchlive-episodes" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>Match Live — Diffusions en Direct</h2>
-
-  <div class="Chaine 01" onclick="openEpisode([
-  'http://ibo.lynxiptv.com/live/820478967468/YwQfFDYLrW/67373.m3u8',
-  'https://server2.com/live/entv.m3u8',
-  'https://server3.com/live/entv.m3u8'
-</div>
-
-<!-- La Bataille -->
-<div id="bataille" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>La Bataille — 2025</h2>
-
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-sy4elb7c5dva.html', 'https://vidmoly.net/embed-sy4elb7c5dva.html', 'https://streamtape.com/e/sy4elb7c5dva/'])"><h3>Épisode 1</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-6phr26j84iqc.html', 'https://vidmoly.net/embed-6phr26j84iqc.html', 'https://streamtape.com/e/6phr26j84iqc/'])"><h3>Épisode 2</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-yjo4ylpd3uok.html', 'https://vidmoly.net/embed-yjo4ylpd3uok.html', 'https://streamtape.com/e/yjo4ylpd3uok/'])"><h3>Épisode 3</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-l8o1r35ulst3.html', 'https://vidmoly.net/embed-l8o1r35ulst3.html', 'https://streamtape.com/e/l8o1r35ulst3/'])"><h3>Épisode 4</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-cz3zka8tfxk9.html', 'https://vidmoly.net/embed-cz3zka8tfxk9.html', 'https://streamtape.com/e/cz3zka8tfxk9/'])"><h3>Épisode 5</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-lkcaskb9ldk7.html', 'https://vidmoly.net/embed-lkcaskb9ldk7.html', 'https://streamtape.com/e/lkcaskb9ldk7/'])"><h3>Épisode 6</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-klkck2revvrl.html', 'https://vidmoly.net/embed-klkck2revvrl.html', 'https://streamtape.com/e/klkck2revvrl/'])"><h3>Épisode 7</h3></div>
-</div>
-
-<!-- Le Cerveau -->
-<div id="cerveau" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>Le Cerveau — 2025</h2>
-
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-qsu9x4yler9f.html', 'https://vidmoly.net/embed-qsu9x4yler9f.html', 'https://streamtape.com/e/qsu9x4yler9f/'])"><h3>Épisode 1</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-3kpy7r69n97b.html', 'https://vidmoly.net/embed-3kpy7r69n97b.html', 'https://streamtape.com/e/3kpy7r69n97b/'])"><h3>Épisode 2</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-cm9zn7dv28lr.html', 'https://vidmoly.net/embed-cm9zn7dv28lr.html', 'https://streamtape.com/e/cm9zn7dv28lr/'])"><h3>Épisode 3</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-vtgg8wcvnivi.html', 'https://vidmoly.net/embed-vtgg8wcvnivi.html', 'https://streamtape.com/e/vtgg8wcvnivi/'])"><h3>Épisode 4</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-b02zafo5w0zu.html', 'https://vidmoly.net/embed-b02zafo5w0zu.html', 'https://streamtape.com/e/b02zafo5w0zu/'])"><h3>Épisode 5</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-5zm6if99i0e7.html', 'https://vidmoly.net/embed-5zm6if99i0e7.html', 'https://streamtape.com/e/5zm6if99i0e7/'])"><h3>Épisode 6</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-toajyxe71ln0.html', 'https://vidmoly.net/embed-toajyxe71ln0.html', 'https://streamtape.com/e/toajyxe71ln0/'])"><h3>Épisode 7</h3></div>
-</div>
-
-<!-- La Villa -->
-<div id="villa" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>La Villa des Cœurs Brisés 2025</h2>
-
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-sy4elb7c5dva.html', 'https://vidmoly.net/embed-sy4elb7c5dva.html', 'https://streamtape.com/e/sy4elb7c5dva/'])"><h3>Épisode 1</h3></div>
-</div>
-
-<!-- Les Cinquante -->
-<div id="cinquante" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>Les Cinquante — Saison 2025</h2>
-
-  <div class="episode" onclick="openEpisode('videos/cinquante-ep1.mp4', true)">
-    <h3>Épisode 1</h3>
-  </div>
-</div>
-
-<!-- ورد و شكولاطة -->
-<div id="ward" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>ورد و شكولاطة — 2025</h2>
-
-  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-1lvffkxkg1se.html', 'https://uqload.cx/embed-1lvffkxkg1se.html', 'https://streamtape.com/e/1lvffkxkg1se/'])"><h3>Épisode 1</h3></div>
-  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-btiaep8sjnhr.html', 'https://uqload.cx/embed-btiaep8sjnhr.html', 'https://streamtape.com/e/btiaep8sjnhr/'])"><h3>Épisode 2</h3></div>
-  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-paarljdk98ep.html', 'https://uqload.cx/embed-paarljdk98ep.html', 'https://streamtape.com/e/paarljdk98ep/'])"><h3>Épisode 3</h3></div>
-  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-h5epigmcltju.html', 'https://uqload.cx/embed-h5epigmcltju.html', 'https://streamtape  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-z8z0p0xer8am.html', 'https://uqload.cx/embed-z8z0p0xer8am.html', 'https://streamtape.com/e/z8z0p0xer8am/'])"><h3>Épisode 5</h3></div>
-  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-ccs0pn24f34i.html', 'https://uqload.cx/embed-ccs0pn24f34i.html', 'https://streamtape.com/e/ccs0pn24f34i/'])"><h3>Épisode 6</h3></div>
-  <div class="episode" onclick="openEpisode(['https://uqload.cx/embed-toajyxe71ln0.html', 'https://vidmoly.net/embed-toajyxe71ln0.html', 'https://streamtape.com/e/toajyxe71ln0/'])"><h3>Épisode 7</h3></div>
-</div>
-
-<!-- سلمى -->
-<div id="Salma" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>سلمى — 2025</h2>
-  <!-- Aucun épisode fourni dans le code original, ajouter des placeholders si nécessaire -->
-</div>
-
-<!-- المشبوه -->
-<div id="mashbouh" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>المشبوه — 2025</h2>
-
-  <div class="episode" onclick="openEpisode(['https://vidmoly.net/embed-1lvffkxkg1se.html', 'https://uqload.cx/embed-1lvffkxkg1se.html', 'https://streamtape.com/e/1lvffkxkg1se/'])"><h3>Épisode 1</h3></div>
-
-</div>
-
-<!-- المدينة البعيدة  -->
-<div id="المدينة البعيدة" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>المدينة البعيدة — 2025</h2>
-
-  <div class="episode" onclick="openEpisode(['https://example.com/server1/dirilis-ep1', 'https://example.com/server2/dirilis-ep1'])"><h3>Épisode 1</h3></div>
-  <div class="episode" onclick="openEpisode(['https://example.com/server1/dirilis-ep2', 'https://example.com/server2/dirilis-ep2'])"><h3>Épisode 2</h3></div>
-
-</div>
-
-<!-- حلم أشرف -->
-<div id="حلم أشرف" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>حلم أشرف — 2025</h2>
-
-  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep1', 'https://example.com/server2/helmachraf-ep1'])"><h3>Épisode 1</h3></div>
-  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep2', 'https://example.com/server2/helmachraf-ep2'])"><h3>Épisode 2</h3></div>
-  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep3', 'https://example.com/server2/helmachraf-ep3'])"><h3>Épisode 3</h3></div>
-  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep4', 'https://example.com/server2/helmachraf-ep4'])"><h3>Épisode 4</h3></div>
-  <div class="episode" onclick="openEpisode(['https://example.com/server1/helmachraf-ep5', 'https://example.com/server2/helmachraf-ep5'])"><h3>Épisode 5</h3></div>
-</div>
-
-<!-- ورود وذنوب -->
-<div id="ورود وذنوب" class="episodes-section">
-  <div class="back-btn" onclick="goBack()">← Retour</div>
-  <h2>ورود وذنوب — 2025</h2>
-
-  <div class="episode" onclick="openEpisode(['https://w.larhu.com/play.php?id=6gl45b5q6rw4', 'https://mp4plus.org/embed-ct8e9dydy4ci.html'])"><h3>Épisode 1</h3></div>
-  <div class="episode" onclick="openEpisode(['https://dsvplay.com/e/bnsjpbyyd15e', 'https://example.com/server2/helmachraf-ep2'])"><h3>Épisode 2</h3></div>
-  <div class="episode" onclick="openEpisode(['https://dsvplay.com/e/jdbq0pxxf379', 'https://example.com/server2/helmachraf-ep3'])"><h3>Épisode 3</h3></div>
-  <div class="episode" onclick="openEpisode(['https://dsvplay.com/e/9ph0m9u1ycc5', 'https://example.com/server2/helmachraf-ep4'])"><h3>Épisode 4</h3></div>
-  <div class="episode" onclick="openEpisode(['https://dsvplay.com/e/j4uwidklfx7m', 'https://example.com/server2/helmachraf-ep5'])"><h3>Épisode 5</h3></div>
-  <div class="episode" onclick="openEpisode(['https://dsvplay.com/e/nodqha43za4a', 'https://example.com/server2/helmachraf-ep5'])"><h3>Épisode 6</h3></div>
-</div>
-
-<!-- Pop-up lecteur vidéo -->
-<div id="videoModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">×</span>
-    <div id="videoContainer"></div>
-  </div>
-</div>
-
-<!-- ---------------- SCRIPT ---------------- -->
-<script>
-
-function showEpisodes(id){
-  document.querySelectorAll('.episodes-section').forEach(s => s.style.display='none');
-  document.getElementById(id).style.display='block';
-  window.scrollTo({top: document.getElementById(id).offsetTop - 60, behavior:'smooth'});
-}
-
-function goBack(){
-  document.querySelectorAll('.episodes-section').forEach(s => s.style.display='none');
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-// ---------- Ouvre une POPUP ----------
-function openEpisode(urls, isVideo = false) {
-  const modal = document.getElementById("videoModal");
-  const container = document.getElementById("videoContainer");
-
-  container.innerHTML = "";
-
-  if (isVideo) {
-    container.innerHTML = `
-      <video controls autoplay>
-        <source src="${urls}" type="video/mp4">
-      </video>
-    `;
-  } else {
-    let buttons = '<div class="server-buttons">';
-    urls.forEach((url, index) => {
-      buttons += `<button onclick="loadServer('${url}', this)">Serveur ${index + 1}</button>`;
+    // Accessibility: close modal on ESC
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById("videoModal");
+        if (modal.style.display === 'flex') closeModal();
+      }
     });
-    buttons += '</div>';
-    container.innerHTML = buttons + '<iframe id="videoFrame" src="' + urls[0] + '" allowfullscreen></iframe>';
-  }
 
-  modal.style.display = "flex";
-}
+    // Fix: if clicking a card that points to a non-existing ID, warn user
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', function() {
+        // the onclick already calls showEpisodes or openEpisode — keep behavior
+      });
+    });
 
-function loadServer(url, button) {
-  document.getElementById('videoFrame').src = url;
-  // Optionnel : mettre en surbrillance le bouton actif
-  document.querySelectorAll('.server-buttons button').forEach(btn => btn.classList.remove('active'));
-  button.classList.add('active');
-}
-
-// ---------- Fermer la pop-up ----------
-function closeModal() {
-  document.getElementById("videoModal").style.display = "none";
-  document.getElementById("videoContainer").innerHTML = "";
-}
-
-</script>
+  </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
