@@ -48,7 +48,16 @@
       transition:0.18s;
     }
     nav a:hover { color:var(--accent); transform:translateY(-2px); }
-
+    <input type="text" id="searchInput" placeholder="Rechercher une série..."
+    style="
+    padding:8px 12px;
+    border-radius:6px;
+    border:none;
+    outline:none;
+    font-size:15px;
+    background:#222;
+    color:white;
+    ">
     /* ---------------- BANNER ---------------- */
     .banner {
       height:54vh;
@@ -710,6 +719,26 @@
 
   <!-- ---------------- SCRIPT ---------------- -->
   <script>
+  
+  const searchInput = document.getElementById("searchInput");
+
+  searchInput.addEventListener("keyup", function () {
+    let filter = searchInput.value.toLowerCase();
+
+    // ne sélectionner que les séries (cartes des posters)
+    let cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+      let title = card.querySelector(".card-title").textContent.toLowerCase();
+
+      if (title.includes(filter)) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  });
+</script>
     // Affiche la section d'épisodes correspondante (ID en paramètre)
     function showEpisodes(id) {
       document.querySelectorAll('.episodes-section').forEach(s => s.style.display = 'none');
@@ -854,6 +883,7 @@ window.addEventListener('click', (e) => {
 
 </body>
 </html>
+
 
 
 
