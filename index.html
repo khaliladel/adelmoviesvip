@@ -349,13 +349,13 @@
 
     <!-- ---------------- MATCH LIVE ---------------- -->
     <section id="matchlive">
-    <h2 class="section-title">Match Live</h2>
-    <div class="series-row">
-     <div class="card" onclick="openMatchLive()">
-    <img src="images/matchlive.png" alt="Match Live">
-    <div class="card-title">Match Live</div>
-    <div class="card-info">2025</div>
-</div>
+  <h2 class="section-title">Match Live</h2>
+  <div class="series-row">
+    <div class="card" onclick="openMatchLive()">
+      <img src="images/matchlive.png" alt="Match Live">
+      <div class="card-title">Match Live</div>
+      <div class="card-info">2025</div>
+    </div>
   </div>
 </section>
 
@@ -691,6 +691,9 @@
   const iframe = document.getElementById('matchLiveContent');
   iframe.src = "images/Matchlive.html"; // <-- Mets ici le nom de ton 2ème HTML
   modal.style.display = "block";
+  function openMatchLive() {
+  // Ouvre le deuxième HTML dans un nouvel onglet / fenêtre plein écran
+  window.open("matchlive.html", "_blank");    
 }
 
 const closeBtn = document.getElementById('closeModal');
@@ -739,6 +742,7 @@ window.addEventListener('click', (e) => {
 
 </body>
 </html>
+
 
 
 
