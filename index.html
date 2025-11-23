@@ -355,28 +355,13 @@
 
     <!-- ---------------- EPISODES (toutes les sections) ---------------- -->
     <!-- MATCH LIVE -->
-<!-- Lecteur m3u8 -->
-<div id="m3u8PlayerContainer" style="display:none; padding:20px;">
-  <video id="m3u8Player" controls autoplay style="width:100%; max-width:900px; border-radius:10px; background:#000;"></video>
-</div>
+    <div id="matchlive-episodes" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2>Match Live — Diffusions en Direct</h2>
 
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-
-<script>
-function openM3U8(url) {
-  document.getElementById("m3u8PlayerContainer").style.display = "block";
-
-  const video = document.getElementById("m3u8Player");
-
-  if (Hls.isSupported()) {
-    const hls = new Hls();
-    hls.loadSource(url);
-    hls.attachMedia(video);
-  } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-    video.src = url; // Safari iOS
-  }
-}
-</script>
+      <div class="episode" onclick="openEpisode(['https://www.elahmad.com/tv/algeria_live.php?id=entv_algerie', 'https://example.com/server2/live.php?id=entv_algerie'])">
+        <h3>Match 1 — Chaine 01</h3>
+      </div>
     </div>
 
     <!-- La Bataille -->
@@ -720,6 +705,7 @@ function openM3U8(url) {
 
 </body>
 </html>
+
 
 
 
