@@ -238,7 +238,13 @@
   </div>
 
   <main>
-
+  <!-- Modal / fenêtre pour Match Live -->
+  <div id="matchLiveModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999;">
+  <div style="position:relative; width:80%; height:80%; margin:5% auto; background:#111; padding:20px; overflow:auto; border-radius:10px;">
+    <span id="closeModal" style="position:absolute; top:10px; right:20px; cursor:pointer; font-size:24px; color:#fff;">&times;</span>
+    <iframe id="matchLiveContent" src="" style="width:100%; height:100%; border:none;"></iframe>
+  </div>
+  </div>
     <!-- ---------------- SECTION TELEREALITE ---------------- -->
     <section id="telerealite">
       <h2 class="section-title">Téléréalité</h2>
@@ -343,15 +349,15 @@
 
     <!-- ---------------- MATCH LIVE ---------------- -->
     <section id="matchlive">
-      <h2 class="section-title">Match Live</h2>
-      <div class="series-row">
-        <div class="card" onclick="showEpisodes('matchlive-episodes')">
-          <img src="images/matchlive.png" alt="Match Live">
-          <div class="card-title">Match Live</div>
-          <div class="card-info">2025</div>
-        </div>
-      </div>
-    </section>
+    <h2 class="section-title">Match Live</h2>
+    <div class="series-row">
+     <div class="card" onclick="openMatchLive()">
+    <img src="images/matchlive.png" alt="Match Live">
+    <div class="card-title">Match Live</div>
+    <div class="card-info">2025</div>
+</div>
+  </div>
+</section>
 
     <!-- ---------------- EPISODES (toutes les sections) ---------------- -->
     <!-- MATCH LIVE -->
@@ -602,7 +608,12 @@
       const top = el.getBoundingClientRect().top + window.pageYOffset - 70;
       window.scrollTo({ top, behavior: 'smooth' });
     }
-
+    
+    function openMatchLive() {
+    var mainDiv = document.getElementById('main-player');
+    mainDiv.innerHTML = `<iframe src="index2.html" style="width:100%; height:100%; border:none;"></iframe>`;
+    }
+    
     function goBack() {
       document.querySelectorAll('.episodes-section').forEach(s => s.style.display = 'none');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -675,7 +686,30 @@
       document.querySelectorAll('.server-buttons button').forEach(b => b.classList.remove('active'));
       if (button) button.classList.add('active');
     }
+    function openMatchLive() {
+  const modal = document.getElementById('matchLiveModal');
+  const iframe = document.getElementById('matchLiveContent');
+  iframe.src = "matchlive.html"; // <-- Mets ici le nom de ton 2ème HTML
+  modal.style.display = "block";
+}
 
+const closeBtn = document.getElementById('closeModal');
+closeBtn.addEventListener('click', () => {
+  const modal = document.getElementById('matchLiveModal');
+  const iframe = document.getElementById('matchLiveContent');
+  modal.style.display = "none";
+  iframe.src = ""; // Vide l'iframe pour stopper le contenu
+});
+
+// Fermer la modal si clic en dehors
+window.addEventListener('click', (e) => {
+  const modal = document.getElementById('matchLiveModal');
+  const iframe = document.getElementById('matchLiveContent');
+  if(e.target === modal) {
+    modal.style.display = "none";
+    iframe.src = "";
+  }
+});
     function closeModal() {
       const modal = document.getElementById("videoModal");
       const container = document.getElementById("videoContainer");
@@ -705,6 +739,7 @@
 
 </body>
 </html>
+
 
 
 
