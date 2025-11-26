@@ -320,7 +320,12 @@
           <div class="card-title">قهوة المحطة</div>
           <div class="card-info">2025</div>
         </div>
-        
+
+        <div class="card" onclick="showEpisodes('Top Chef')">
+          <img src="images/topchef.jpg" alt="Top Chef">
+          <div class="card-title">Top Chef</div>
+          <div class="card-info">2025</div>
+        </div>
     </div>
     </section>
 
@@ -581,7 +586,13 @@
       <div class="episode" onclick="openEpisode(['https://w.larhu.com/play.php?id=lzuramwhbd46'])"><h3>Épisode 14</h3></div>
     </div>
 
-
+      <!--  Top Chef -->
+    <div id="Top Chef" class="episodes-section">
+      <div class="back-btn" onclick="goBack()">← Retour</div>
+      <h2> Top Chef — 2025</h2>
+      <div class="episode" onclick="openEpisode(['https://w.larhu.com/play.php?id=c675d8v58s1w','https://dsvplay.com/d/2nj9y7rmbaxz'])"><h3>Épisode 1</h3></div>
+      <div class="episode" onclick="openEpisode(['https://w.larhu.com/play.php?id=kmsl2h8jjiaq','https://dsvplay.com/e/y65521qrtcvd'])"><h3>Épisode 2</h3></div>
+    </div>
   
     <!--  ضارية -->
     <div id="ضارية" class="episodes-section">
@@ -1017,6 +1028,7 @@ window.addEventListener('click', (e) => {
 
 </body>
 </html>
+
 
 
 
