@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adel TV – Match Live </title>
+
+    <!-- HLS.JS -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+    <style>
+        body {
+            margin: 0;
+            background: #0a0a0a;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        header {
+            background: #111;
+            padding: 15px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            border-bottom: 2px solid #222;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        /* ------- MENU LISTE chaînes (style Tivimate) ------- */
+        .sidebar {
+            width: 280px;
+            background: #111;
+            border-right: 2px solid #222;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .channel {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #1a1a1a;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            border-left: 4px solid transparent;
+        }
+
+        .channel:hover {
+            background: #272727;
+            border-left: 4px solid #00b3ff;
+        }
+
+        /* ------- LECTEUR ------- */
+        .player-area {
+            flex: 1;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            background: black;
+        }
+
+        /* --- Iframe player --- */
+        .iframe-player {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<header>Adel TV – Match Live</header>
+
+<div class="container">
+
+    <!-- MENU CHAINES -->
+    <div class="sidebar">
+        <!-- Channel 1 - Embed Video -->
+        <div class="channel" onclick="playEmbed('http://ibo.lynxiptv.com/live/287315663144/RFRTfhYhWY/67742.m3u8')">
+             ⚽ BeinSports 1 – HD
+        </div>
+
+        <!-- Channel 2 - Embed Video -->
+        <div class="channel" onclick="playEmbed('http://ibo.lynxiptv.com/live/287315663144/RFRTfhYhWY/67392.m3u8')">
+            ⚽ BeinSports 1 – SD
+        </div>
+
+        <!-- Channel 3 - Embed Video -->
+        <div class="channel" onclick="playEmbed('http://ibo.lynxiptv.com/live/287315663144/RFRTfhYhWY/196180.m3u8')">
+             ⚽ BeinSports 2 – HD
+        </div>
+
+        <!-- Channel 4 - Embed Video -->
+        <div class="channel" onclick="playEmbed('http://ibo.lynxiptv.com/live/287315663144/RFRTfhYhWY/67393.m3u8')">
+            ⚽ BeinSports 2 – SD
+        </div>
+
+         <!-- Channel 5 - Embed Video -->
+        <div class="channel" onclick="playEmbed('http://ibo.lynxiptv.com/live/287315663144/RFRTfhYhWY/67744.m3u8')">
+             ⚽ BeinSports 3 – HD
+        </div>
+
+        <!-- Channel 6 - Embed Video -->
+        <div class="channel" onclick="playEmbed('http://ibo.lynxiptv.com/live/287315663144/RFRTfhYhWY/196191.m3u8')">
+            ⚽ BeinSports 3 – SD
+        </div>
+
+    </div>
+
+    <!-- LECTEUR VIDEO -->
+    <div class="player-area" id="player-area">
+        <video id="video" controls autoplay></video>
+        <!-- Iframe player will be shown here -->
+    </div>
+
+</div>
+
+<script>
+    // Fonction pour jouer un flux HLS
+    function playStream(url) {
+        var video = document.getElementById('video');
+        var playerArea = document.getElementById('player-area');
+        
+        // Effacer les iframe existantes si elles sont présentes
+        var iframes = playerArea.getElementsByTagName('iframe');
+        for (var i = 0; i < iframes.length; i++) {
+            iframes[i].remove();
+        }
+        
+        // Vérifier si HLS est supporté
+        if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(url);
+            hls.attachMedia(video);
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = url;
+        }
+    }
+
+    // Fonction pour afficher un embed (iframe)
+    function playEmbed(url) {
+        var playerArea = document.getElementById('player-area');
+        
+        // Effacer la vidéo existante
+        var video = document.getElementById('video');
+        if (video) {
+            video.remove();
+        }
+        
+        // Créer un iframe pour l'embed
+        var iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.classList.add('iframe-player');
+        iframe.frameBorder = "0";
+        iframe.allowFullscreen = true;
+        
+        // Ajouter l'iframe à la zone du lecteur
+        playerArea.appendChild(iframe);
+    }
+</script>
+
+</body>
+</html>
