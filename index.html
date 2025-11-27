@@ -1051,46 +1051,13 @@ window.addEventListener('click', (e) => {
       });
     });
 
-  <div id="playerModal" style="
-  display:none;
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:black;
-  z-index:9999;
-">
-  <div style="position:absolute; top:10px; left:10px; font-size:22px; color:white; cursor:pointer;"
-       onclick="closePlayer()">← Retour</div>
-
-  <iframe id="playerFrame" 
-    allow="autoplay; fullscreen; encrypted-media" 
-    allowfullscreen
-    style="border:0; width:100%; height:100%;"></iframe>
-</div>
-
-<script>
-function openEpisode(links) {
-    // Essaie le premier lien, si ça marche pas utilise le second
-    const primary = links[0];
-    const backup = links[1] ? links[1] : links[0];
-
-    // On met un lien safe pour lecteur mobile
-    document.getElementById("playerFrame").src = primary;
-
-    document.getElementById("playerModal").style.display = "block";
-    document.body.style.overflow = "hidden";
-}
-
-function closePlayer() {
-    document.getElementById("playerModal").style.display = "none";
-    document.getElementById("playerFrame").src = "";
-    document.body.style.overflow = "auto";
-}
+  
 </script>
 
 
 </body>
 </html>
+
 
 
 
