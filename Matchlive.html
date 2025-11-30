@@ -2,37 +2,40 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Adel TV – Match Live</title>
 
     <!-- HLS.JS -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <style>
+
+        /* ---------- STYLE GLOBAL ---------- */
         body {
             margin: 0;
             background: #0a0a0a;
             font-family: Arial, sans-serif;
             color: white;
+            overflow: hidden;
         }
 
         header {
             background: #111;
-            padding: 15px;
+            padding: 12px;
             text-align: center;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: bold;
             border-bottom: 2px solid #222;
         }
 
         .container {
             display: flex;
-            height: calc(100vh - 60px);
+            height: calc(100vh - 55px);
         }
 
-        /* ------- MENU LISTE chaînes ------- */
+        /* ---------- SIDEBAR (MENU) ---------- */
         .sidebar {
-            width: 280px;
+            width: 260px;
             background: #111;
             border-right: 2px solid #222;
             overflow-y: auto;
@@ -40,21 +43,22 @@
         }
 
         .channel {
-            padding: 12px;
-            margin-bottom: 8px;
+            padding: 14px;
+            margin-bottom: 10px;
             background: #1a1a1a;
             border-radius: 6px;
             cursor: pointer;
             transition: 0.2s;
+            font-size: 16px;
             border-left: 4px solid transparent;
         }
 
         .channel:hover {
-            background: #272727;
+            background: #2a2a2a;
             border-left: 4px solid #00b3ff;
         }
 
-        /* ------- LECTEUR ------- */
+        /* ---------- PLAYER AREA ---------- */
         .player-area {
             flex: 1;
             background: #000;
@@ -68,15 +72,49 @@
             width: 100%;
             height: 100%;
             background: black;
+            object-fit: contain;
         }
 
-        /* Bouton xPola */
+        /* ---------- BOUTON XPOLA ---------- */
         .play-button {
             background-color: #f7f7f7;
             border: none;
-            padding: 20px;
+            padding: 25px;
             border-radius: 50%;
             cursor: pointer;
+            transform: scale(1.1);
+        }
+
+        /* ---------- VERSION MOBILE ---------- */
+        @media (max-width: 768px) {
+
+            header {
+                font-size: 18px;
+            }
+
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 250px;
+            }
+
+            .player-area {
+                height: calc(100vh - 300px);
+            }
+
+            .channel {
+                font-size: 18px;
+                padding: 16px;
+            }
+
+            .play-button {
+                padding: 30px;
+            }
         }
     </style>
 </head>
@@ -121,7 +159,6 @@
         <video id="video" controls autoplay></video>
 
     </div>
-
 </div>
 
 <script>
@@ -132,21 +169,20 @@
             "intent://XPOLA808eGRkYCo/P3lyfz58aX5oeWBkZj5zf30/fHlmdT8oIiAkJygpJickJig/SWdBdlZUSVxiRz8mJyMpIj59I2UobGB8cWl1Yj1kaWB1LXJif2djdWI=#Intent;scheme=xmtv-browser;package=com.xpola.player;end";
     }
 
-
     // --- FUNCTION PRINCIPALE POUR CHANGER DE LECTEUR ---
     function playStream(url) {
 
         var video = document.getElementById('video');
         var xpola = document.getElementById('xpola-player');
 
-        // Si le lien est un intent → afficher xPola
+        // Si le lien est un intent → Player xPola
         if (url.startsWith("intent://")) {
             video.style.display = "none";
             xpola.style.display = "block";
             return;
         }
 
-        // Sinon → lecteur HLS
+        // Sinon → lecteur HLS normal
         xpola.style.display = "none";
         video.style.display = "block";
 
@@ -159,7 +195,7 @@
         }
     }
 
-    // Charger automatiquement une chaîne HLS de test
+    // Charger une chaîne HLS par défaut
     playStream("https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8");
 
 </script>
