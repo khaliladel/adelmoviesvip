@@ -1,9 +1,9 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adel TV – Match Live </title>
+    <title>Adel TV – Match Live</title>
 
     <!-- HLS.JS -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
@@ -69,6 +69,15 @@
             height: 100%;
             background: black;
         }
+
+        /* Bouton xPola */
+        .play-button {
+            background-color: #f7f7f7;
+            border: none;
+            padding: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -80,45 +89,80 @@
     <!-- MENU CHAINES -->
     <div class="sidebar">
         <div class="channel"
-             onclick="playStream('https://xpola.yoo7.com/h15-page/?id=YUhSMGNEb3ZMMmxpYnk1c2VXNTRhWEIwZGk1amIyMHZiR2wyWlM4NE1qQTBOemc1TmpjME5qZ3ZXWGRSWmtaRVdVeHlWeTgyTnpNNU1pNXRNM1U0ZkhCc1lYbGxjaTEwZVhCbFBXSnliM2R6WlhJPQ==')">
-             ⚽ MCA 🇩🇿 - Mamelodi Sundowns 🇿🇦
+             onclick="playStream('intent://XPOLA808eGRkYCo/P3lyfz58aX5oeWBkZj5zf30/fHlmdT8oIiAkJygpJickJig/SWdBdlZUSVxiRz8mJyMpIj59I2UobGB8cWl1Yj1kaWB1LXJif2djdWI=#Intent;scheme=xmtv-browser;package=com.xpola.player;end')">
+             ▶️ Lancer avec xPola Player
+        </div>
+
+        <div class="channel"
+             onclick="playStream('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8')">
+             ⚽ Exemple chaîne HLS
         </div>
     </div>
 
     <!-- LECTEUR VIDEO -->
     <div class="player-area" id="player-area">
+
+        <!-- PLAYER XPOLA -->
+        <div id="xpola-player" style="display:none; text-align:center;">
+            <button onclick="openXpola()" class="play-button">
+                <svg fill="#000000" height="80px" width="80px" viewBox="0 0 60 60">
+                    <g>
+                        <path d="M45.563,29.174l-22-15c-0.307-0.208-0.703-0.231-1.031-0.058C22.205,14.289,22,14.629,22,15v30 
+                        c0,0.371,0.205,0.711,0.533,0.884C22.679,45.962,22.84,46,23,46c0.197,0,0.394-0.059,0.563-0.174l22-15 
+                        C45.836,30.64,46,30.331,46,30S45.836,29.36,45.563,29.174z M24,43.107V16.893L43.225,30L24,43.107z"/>
+                        <path d="M30,0C13.458,0,0,13.458,0,30s13.458,30,30,30s30-13.458,30-30S46.542,0,30,0z 
+                        M30,58C14.561,58,2,45.439,2,30 S14.561,2,30,2s28,12.561,28,28S45.439,58,30,58z"/>
+                    </g>
+                </svg>
+            </button>
+        </div>
+
+        <!-- PLAYER HLS -->
         <video id="video" controls autoplay></video>
+
     </div>
 
 </div>
 
 <script>
 
-    function playStream(url) {
-        var video = document.getElementById('video');
+    // --- OUVERTURE DU PLAYER XPOLA ---
+    function openXpola() {
+        location.href =
+            "intent://XPOLA808eGRkYCo/P3lyfz58aX5oeWBkZj5zf30/fHlmdT8oIiAkJygpJickJig/SWdBdlZUSVxiRz8mJyMpIj59I2UobGB8cWl1Yj1kaWB1LXJif2djdWI=#Intent;scheme=xmtv-browser;package=com.xpola.player;end";
+    }
 
-        // Supprimer les iframes s'il y en a
-        document.querySelectorAll("iframe").forEach(e => e.remove());
+
+    // --- FUNCTION PRINCIPALE POUR CHANGER DE LECTEUR ---
+    function playStream(url) {
+
+        var video = document.getElementById('video');
+        var xpola = document.getElementById('xpola-player');
+
+        // Si le lien est un intent → afficher xPola
+        if (url.startsWith("intent://")) {
+            video.style.display = "none";
+            xpola.style.display = "block";
+            return;
+        }
+
+        // Sinon → lecteur HLS
+        xpola.style.display = "none";
+        video.style.display = "block";
 
         if (Hls.isSupported()) {
             var hls = new Hls();
             hls.loadSource(url);
             hls.attachMedia(video);
         } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = url; // iOS / Safari
+            video.src = url;
         }
     }
 
-    // Charger automatiquement la chaîne au démarrage :
-    playStream("https://livee.yallashootttv.com/albaplayer/sports-2/");
+    // Charger automatiquement une chaîne HLS de test
+    playStream("https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8");
 
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
