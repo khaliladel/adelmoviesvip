@@ -1,108 +1,74 @@
-<!DOCTYPE html>
-<html lang="ar">
+<!doctype html>
+<html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>مشغل القنوات الاحترافي</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<style>
-:root{
-  --bg:#0b0b0b; --panel:#111; --muted:#9aa0a6; --accent:#e50914;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:'Roboto',sans-serif;
-  background:var(--bg);
-  color:#fff;
-}
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px 20px;
-  background:linear-gradient(90deg,#0f0f0f,#141414);
-  border-bottom:1px solid #1b1b1b;
-}
-header h1{margin:0;font-weight:500;font-size:18px;}
-header .actions{display:flex;gap:12px;align-items:center;}
-button.btn{
-  background:var(--accent);
-  border:0;padding:8px 14px;border-radius:8px;color:#fff;cursor:pointer;
-}
-button.ghost{
-  background:transparent;border:1px solid #222;padding:8px 14px;border-radius:8px;color:#ccc;cursor:pointer;
-}
-.main{
-  display:flex;gap:16px;padding:16px;height:calc(100vh - 64px);
-}
-.left{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  overflow:auto;
-}
-.left input[type="text"]{
-  padding:8px;
-  border-radius:6px;
-  border:1px solid #222;
-  background:#080808;
-  color:#fff;
-  margin-bottom:10px;
-}
-.channels{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
-  gap:12px;
-}
-.card{
-  background:var(--panel);
-  border-radius:10px;
-  overflow:hidden;
-  cursor:pointer;
-  transition:0.2s;
-  display:flex;
-  flex-direction:column;
-  border:1px solid #1b1b1b;
-}
-.card:hover{transform:translateY(-3px);border-color:var(--accent);}
-.card img{width:100%;height:100px;object-fit:cover;}
-.card .title{
-  font-size:14px;
-  font-weight:500;
-  padding:4px 6px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.card .actions{
-  display:flex;justify-content:space-between;padding:4px 6px;gap:4px;
-}
-.right{
-  width:520px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-.playerBox{
-  background:var(--panel);
-  padding:12px;
-  border-radius:10px;
-  border:1px solid #1b1b1b;
-}
-video{
-  width:100%;
-  height:300px;
-  border-radius:10px;
-  background:#000;
-}
-.form{
-  background:var(--panel);
-  padding:12px;
-  border-radius:10px;
-  border:1px solid #1b1b1b;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Adel Tv — Lecteur</title>
+  <style>
+    :root{--bg:#071022;--card:#0b1220;--accent:#06b6d4;--muted:#9aa6b2}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:#e6eef6}
+    .container{max-width:1100px;margin:24px auto;padding:16px}
+    header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+    .logo{width:44px;height:44px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;color:#052026}
+    h1{font-size:18px;margin:0}
+    .player{background:rgba(255,255,255,0.02);border-radius:10px;overflow:hidden;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+    iframe{width:100%;height:620px;border:0;background:#000;display:block}
+    .controls{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));gap:8px}
+    button{background:var(--accent);border:0;padding:8px 12px;border-radius:8px;color:#052026;font-weight:600;cursor:pointer}
+    .muted{color:var(--muted);font-size:13px}
+    @media (max-width:640px){ iframe{height:360px} }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">A</div>
+      <div>
+        <h1>Adel Tv</h1>
+        <div class="muted"> Adel movies 🔥</div>
+      </div>
+    </header>
+
+    <div class="player" id="playerWrap">
+      <!-- iframe corrigé (frameborder au lieu de rameborder) -->
+      <iframe
+        id="streamFrame"
+        src="https://pl.yalashoot.xyz/albaplayer/kuwait-sport/?serv=0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        frameborder="0"
+      ></iframe>
+
+      <div class="controls">
+        <div class="muted">Source: Adel TV</div>
+        <div style="display:flex;gap:8px">
+          <button id="openFullscreen">Plein écran</button>
+          <button id="reload">Recharger</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const iframe = document.getElementById('streamFrame');
+    const wrap = document.getElementById('playerWrap');
+
+    document.getElementById('reload').addEventListener('click', () => {
+      // ajoute un timestamp pour forcer le rechargement
+      const url = new URL(iframe.src);
+      url.searchParams.set('_r', Date.now());
+      iframe.src = url.toString();
+    });
+
+    document.getElementById('openFullscreen').addEventListener('click', () => {
+      if (wrap.requestFullscreen) wrap.requestFullscreen();
+      else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
+      else if (wrap.msRequestFullscreen) wrap.msRequestFullscreen();
+      else alert('Votre navigateur ne supporte pas le plein écran via script — utilisez le bouton du lecteur.');
+    });
+  </script>
+</body>
+</html>  border:1px solid #1b1b1b;
   display:none;
   flex-direction:column;
   gap:8px;
