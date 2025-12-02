@@ -94,43 +94,7 @@ input[type="url"],input[type="text"]{
 </head>
 <body>
 
-<header>
-  <h1>مشغل القنوات الاحترافي</h1>
-  <div class="actions">
-    <input type="text" id="searchInput" placeholder="ابحث عن قناة...">
-    <button class="btn" id="openFormBtn">➕ إضافة قناة</button>
-  </div>
-</header>
 
-<div class="main">
-
-  <!-- قائمة القنوات -->
-  <div class="left">
-    <div class="channels" id="channelList"></div>
-  </div>
-
-  <!-- المشغل + النموذج -->
-  <div class="right">
-    <div class="playerBox">
-      <video id="video" controls muted></video>
-      <div id="status" style="color:#aaa;margin-top:6px">جاهز</div>
-      <div style="margin-top:6px;color:#9ee1a8" id="manifestLink"></div>
-      <button class="ghost" id="stopBtn">إيقاف</button>
-    </div>
-
-    <div class="form" id="addForm">
-      <input type="text" id="chName" placeholder="اسم القناة">
-      <input type="url" id="chUrl" placeholder="رابط m3u8 أو ts">
-      <input type="file" id="chImage" accept="image/*">
-      <div id="preview" class="filePreview">صورة</div>
-      <div style="display:flex;gap:6px">
-        <button class="btn" id="addBtn">إضافة</button>
-        <button class="ghost" id="cancelBtn">إلغاء</button>
-      </div>
-      <div id="formMsg" style="color:#ccc"></div>
-    </div>
-  </div>
-</div>
 
 <script>
 let CHANNELS = [];
@@ -165,46 +129,7 @@ const searchInput = document.getElementById("searchInput");
 let hls = null;
 let lastThumbData = null;
 
-/* ================= Render Channels ================= */
-function renderChannels(filter=""){
-  channelList.innerHTML = "";
-  CHANNELS.forEach((ch,i)=>{
-    if(filter && !ch.name.toLowerCase().includes(filter.toLowerCase())) return;
-    const card = document.createElement("div");
-    card.className="card";
-    card.innerHTML=`
-      <img src="${ch.image}">
-      <div class="title">${ch.name}</div>
-      <div class="actions">
-        <button class="ghost" onclick="editChannel(${i},event)">✏️</button>
-        <button class="ghost" onclick="deleteChannel(${i},event)">🗑️</button>
-      </div>
-    `;
-    card.onclick = ()=>playChannel(i);
-    channelList.appendChild(card);
-  });
-}
 
-/* ================= Play Channel ================= */
-function playChannel(i){
-  const ch = CHANNELS[i];
-  manifestLink.innerHTML = ch.url;
-  if(hls){ hls.destroy(); hls=null; }
-  video.pause();
-  if(Hls.isSupported() && ch.url.endsWith(".m3u8")){
-    hls = new Hls();
-    hls.loadSource(ch.url);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, ()=> video.play());
-  }else{
-    video.src = ch.url;
-    video.play();
-  }
-  statusEl.textContent="التشغيل الآن";
-}
-
-/* ================= Add / Edit / Delete ================= */
-openFormBtn.onclick=()=>{addForm.style.display="flex";};
 cancelBtn.onclick=()=>{addForm.style.display="none"; resetForm();};
 
 function resetForm(){
