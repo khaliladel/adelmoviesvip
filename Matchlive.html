@@ -146,7 +146,7 @@ function loadStream(url){
   if(video.canPlayType('application/vnd.apple.mpegURL')){
     video.src = url;
     video.play();
-    status.textContent = "مشغّل (native)";
+    status.textContent = "source : Adel movies";
   } else if(Hls.isSupported()){
     hls = new Hls();
     hls.loadSource(url);
