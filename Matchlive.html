@@ -49,11 +49,13 @@
     overflow:hidden;
     box-shadow:0 10px 30px rgba(2,6,23,0.6);
     margin-bottom:12px;
+    position:relative;
   }
-  video{
+  video, iframe{
     width:100%;
-    height:auto;
+    height:620px;
     display:block;
+    border:none;
   }
   .controls{
     display:flex;
@@ -101,12 +103,13 @@
     <div class="logo">A</div>
     <div>
       <h1>Adel TV</h1>
-      <div Adel movies </div>
+      <div>Adel Movies</div>
     </div>
   </header>
 
   <div class="player">
-    <video id="video" controls autoplay></video>
+    <video id="video" controls autoplay style="display:none"></video>
+    <iframe id="iframe" style="display:none" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     <div class="controls">
       <span id="status">جاهز</span>
       <div style="display:flex;gap:8px">
@@ -121,47 +124,59 @@
 
 <script>
 const CHANNELS = [
-  {name:"ALGERIE - SOUDAN", url:"https://lp.kooralive.cfd/albaplayer/kuwait-sport/"},
-  {name:"BEIN 1", url:"https://ab.footballii.ir/hls2/bein1_src.m3u8"},
-  {name:"BEIN 2", url:"https://koraflix.s-cloudflare.com/live/250_.m3u8"},
-  {name:"BEIN Xtra 1", url:"http://bk.xiptv.network:80/live/freelist/freelist568/11536.m3u8"},
-  {name:"BEIN 4", url:"https://koraflix.s-cloudflare.com/live/250_.m3u8"},
+  {name:"ALGERIE - SOUDAN", type:"iframe", url:"https://lp.kooralive.cfd/albaplayer/kuwait-sport/?serv=0"},
+  {name:"BEIN 1", type:"hls", url:"https://ab.footballii.ir/hls2/bein1_src.m3u8"},
+  {name:"BEIN 2", type:"hls", url:"https://koraflix.s-cloudflare.com/live/250_.m3u8"},
+  {name:"BEIN Xtra 1", type:"hls", url:"http://bk.xiptv.network:80/live/freelist/freelist568/11536.m3u8"},
+  {name:"BEIN 4", type:"hls", url:"https://koraflix.s-cloudflare.com/live/250_.m3u8"},
 ];
 
 const video = document.getElementById('video');
+const iframe = document.getElementById('iframe');
 const status = document.getElementById('status');
 const channelsContainer = document.getElementById('channels');
 const reloadBtn = document.getElementById('reload');
 const fullscreenBtn = document.getElementById('fullscreen');
 
 let hls = null;
-let currentURL = CHANNELS[0].url;
+let currentChannel = CHANNELS[0];
 
-function loadStream(url){
-  if(hls){
-    hls.destroy();
-    hls = null;
-  }
-  currentURL = url;
+function loadStream(channel){
+  currentChannel = channel;
+  // إخفاء كلا اللاعبين
+  video.style.display = "none";
+  iframe.style.display = "none";
   status.textContent = "جاري الاتصال...";
-  if(video.canPlayType('application/vnd.apple.mpegURL')){
-    video.src = url;
-    video.play();
-    status.textContent = "source : Adel movies";
-  } else if(Hls.isSupported()){
-    hls = new Hls();
-    hls.loadSource(url);
-    hls.attachMedia(video);
-    hls.on(Hls.Events.MANIFEST_PARSED, ()=>{
+
+  if(channel.type === "hls"){
+    video.style.display = "block";
+    if(hls){
+      hls.destroy();
+      hls = null;
+    }
+    if(video.canPlayType('application/vnd.apple.mpegURL')){
+      video.src = channel.url;
       video.play();
       status.textContent = "متصل وجاهز";
-    });
-    hls.on(Hls.Events.ERROR,(event,data)=>{
-      status.textContent = "خطأ في البث";
-      console.error(data);
-    });
-  } else {
-    status.textContent = "المتصفح لا يدعم HLS";
+    } else if(Hls.isSupported()){
+      hls = new Hls();
+      hls.loadSource(channel.url);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, ()=>{
+        video.play();
+        status.textContent = "متصل وجاهز";
+      });
+      hls.on(Hls.Events.ERROR,(event,data)=>{
+        status.textContent = "خطأ في البث";
+        console.error(data);
+      });
+    } else {
+      status.textContent = "المتصفح لا يدعم HLS";
+    }
+  } else if(channel.type === "iframe"){
+    iframe.style.display = "block";
+    iframe.src = channel.url;
+    status.textContent = "عرض القناة عبر iframe";
   }
 }
 
@@ -173,20 +188,26 @@ CHANNELS.forEach((ch,i)=>{
   btn.onclick = ()=>{
     document.querySelectorAll('.channel-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
-    loadStream(ch.url);
+    loadStream(ch);
   };
   channelsContainer.appendChild(btn);
 });
 
 // أول بث عند التحميل
-loadStream(currentURL);
+loadStream(currentChannel);
 
 // أزرار التحكم
-reloadBtn.onclick = ()=>loadStream(currentURL);
+reloadBtn.onclick = ()=>loadStream(currentChannel);
 fullscreenBtn.onclick = ()=>{
-  if(video.requestFullscreen) video.requestFullscreen();
-  else if(video.webkitRequestFullscreen) video.webkitRequestFullscreen();
-  else if(video.msRequestFullscreen) video.msRequestFullscreen();
+  if(currentChannel.type === "hls"){
+    if(video.requestFullscreen) video.requestFullscreen();
+    else if(video.webkitRequestFullscreen) video.webkitRequestFullscreen();
+    else if(video.msRequestFullscreen) video.msRequestFullscreen();
+  } else {
+    if(iframe.requestFullscreen) iframe.requestFullscreen();
+    else if(iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
+    else if(iframe.msRequestFullscreen) iframe.msRequestFullscreen();
+  }
 };
 </script>
 
