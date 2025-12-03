@@ -1,185 +1,196 @@
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="ar">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Adel Tv — Lecteur</title>
-  <style>
-    :root{--bg:#071022;--card:#0b1220;--accent:#06b6d4;--muted:#9aa6b2}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:#e6eef6}
-    .container{max-width:1100px;margin:24px auto;padding:16px}
-    header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-    .logo{width:44px;height:44px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;color:#052026}
-    h1{font-size:18px;margin:0}
-    .player{background:rgba(255,255,255,0.02);border-radius:10px;overflow:hidden;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
-    iframe{width:100%;height:620px;border:0;background:#000;display:block}
-    .controls{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));gap:8px}
-    button{background:var(--accent);border:0;padding:8px 12px;border-radius:8px;color:#052026;font-weight:600;cursor:pointer}
-    .muted{color:var(--muted);font-size:13px}
-    @media (max-width:640px){ iframe{height:360px} }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <header>
-      <div class="logo">A</div>
-      <div>
-        <h1>Adel Tv</h1>
-        <div class="muted"> Adel movies 🔥</div>
-      </div>
-    </header>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adel TV</title>
 
-    <div class="player" id="playerWrap">
-      <!-- iframe corrigé (frameborder au lieu de rameborder) -->
-      <iframe
-        id="streamFrame"
-        src="https://ab.footballii.ir/hls2/bein1_src.m3u8"
-        allow="autoplay; encrypted-media"
-        allowfullscreen
-        frameborder="0"
-      ></iframe>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
-      <div class="controls">
-        <div class="muted">Source: Adel TV</div>
-        <div style="display:flex;gap:8px">
-          <button id="openFullscreen">Plein écran</button>
-          <button id="reload">Recharger</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const iframe = document.getElementById('streamFrame');
-    const wrap = document.getElementById('playerWrap');
-
-    document.getElementById('reload').addEventListener('click', () => {
-      // ajoute un timestamp pour forcer le rechargement
-      const url = new URL(iframe.src);
-      url.searchParams.set('_r', Date.now());
-      iframe.src = url.toString();
-    });
-
-    document.getElementById('openFullscreen').addEventListener('click', () => {
-      if (wrap.requestFullscreen) wrap.requestFullscreen();
-      else if (wrap.webkitRequestFullscreen) wrap.webkitRequestFullscreen();
-      else if (wrap.msRequestFullscreen) wrap.msRequestFullscreen();
-      else alert('Votre navigateur ne supporte pas le plein écran via script — utilisez le bouton du lecteur.');
-    });
-  </script>
-</body>
-</html>  
+<style>
+  :root{
+    --bg:#071022;
+    --card:#0b1220;
+    --accent:#06b6d4;
+    --muted:#9aa6b2
+  }
+  body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:var(--bg);
+    color:#e6eef6;
+    display:flex;
+    justify-content:center;
+    padding:20px;
+  }
+  .container{
+    max-width:1000px;
+    width:100%;
+  }
+  header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:16px;
+  }
+  .logo{
+    width:44px;height:44px;
+    border-radius:8px;
+    background:var(--accent);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:700;color:#052026;
+  }
+  h1{margin:0;font-size:20px;}
+  .player{
+    background:var(--card);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(2,6,23,0.6);
+    margin-bottom:12px;
+  }
+  video{
+    width:100%;
+    height:auto;
+    display:block;
+  }
+  .controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px;
+    background:rgba(255,255,255,0.02);
+    gap:8px;
+  }
+  .channels{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    margin-top:12px;
+    padding-bottom:8px;
+  }
+  .channel-btn{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.1);
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    color:#fff;
+    white-space:nowrap;
+  }
+  .channel-btn.active{
+    background:var(--accent);
+    border:none;
+  }
+  button{
+    padding:6px 12px;
+    background:var(--accent);
+    border:none;
+    color:#052026;
+    font-weight:600;
+    border-radius:6px;
+    cursor:pointer;
+  }
 </style>
 </head>
 <body>
 
+<div class="container">
+  <header>
+    <div class="logo">A</div>
+    <div>
+      <h1>Adel TV</h1>
+      <div Adel movies </div>
+    </div>
+  </header>
 
+  <div class="player">
+    <video id="video" controls autoplay></video>
+    <div class="controls">
+      <span id="status">جاهز</span>
+      <div style="display:flex;gap:8px">
+        <button id="reload">إعادة تحميل</button>
+        <button id="fullscreen">FullScreen</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="channels" id="channels"></div>
+</div>
 
 <script>
-let CHANNELS = [];
+const CHANNELS = [
+  {name:"BEIN 1", url:"https://ab.footballii.ir/hls2/bein1_src.m3u8"},
+  {name:"BEIN 2", url:"https://koraflix.s-cloudflare.com/live/250_.m3u8"},
+  {name:"BEIN 3", url:"https://ab.footballii.ir/hls2/bein3_src.m3u8"},
+  {name:"BEIN 4", url:"https://koraflix.s-cloudflare.com/live/250_.m3u8"},
+  {name:"SSC 1", url:"https://edge4-moblive.live.icc-01.bassbossstream.com/live/n-ssc1Xmid.m3u8"},
+  {name:"SSC 2", url:"https://edge4-moblive.live.icc-01.bassbossstream.com/live/n-ssc2Xmid.m3u8"},
+  {name:"SSC 3", url:"https://edge4-moblive.live.icc-01.bassbossstream.com/live/n-ssc3Xmid.m3u8"}
+];
 
-/* تحميل القنوات من localStorage */
-const saved = localStorage.getItem("channelsDB");
-if(saved){
-  CHANNELS = JSON.parse(saved);
-}else{
-  CHANNELS = [
-    {name:"Chaîne Sport",url:"https://koraflix.s-cloudflare.com/live/250_.m3u8",image:"https://i.imgur.com/TVgZC1y.jpeg"}
-  ];
-}
-
-/* DOM Elements */
-const channelList = document.getElementById("channelList");
-const video = document.getElementById("video");
-const statusEl = document.getElementById("status");
-const manifestLink = document.getElementById("manifestLink");
-const openFormBtn = document.getElementById("openFormBtn");
-const addForm = document.getElementById("addForm");
-const cancelBtn = document.getElementById("cancelBtn");
-const addBtn = document.getElementById("addBtn");
-const chName = document.getElementById("chName");
-const chUrl = document.getElementById("chUrl");
-const chImage = document.getElementById("chImage");
-const preview = document.getElementById("preview");
-const formMsg = document.getElementById("formMsg");
-const stopBtn = document.getElementById("stopBtn");
-const searchInput = document.getElementById("searchInput");
+const video = document.getElementById('video');
+const status = document.getElementById('status');
+const channelsContainer = document.getElementById('channels');
+const reloadBtn = document.getElementById('reload');
+const fullscreenBtn = document.getElementById('fullscreen');
 
 let hls = null;
-let lastThumbData = null;
+let currentURL = CHANNELS[0].url;
 
-
-cancelBtn.onclick=()=>{addForm.style.display="none"; resetForm();};
-
-function resetForm(){
-  chName.value=""; chUrl.value=""; chImage.value="";
-  preview.innerHTML="صورة"; lastThumbData=null; formMsg.textContent="";
+function loadStream(url){
+  if(hls){
+    hls.destroy();
+    hls = null;
+  }
+  currentURL = url;
+  status.textContent = "جاري الاتصال...";
+  if(video.canPlayType('application/vnd.apple.mpegURL')){
+    video.src = url;
+    video.play();
+    status.textContent = "مشغّل (native)";
+  } else if(Hls.isSupported()){
+    hls = new Hls();
+    hls.loadSource(url);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, ()=>{
+      video.play();
+      status.textContent = "متصل وجاهز";
+    });
+    hls.on(Hls.Events.ERROR,(event,data)=>{
+      status.textContent = "خطأ في البث";
+      console.error(data);
+    });
+  } else {
+    status.textContent = "المتصفح لا يدعم HLS";
+  }
 }
 
-chImage.onchange=()=>{
-  const f=chImage.files[0];
-  if(!f){ preview.innerHTML="صورة"; return; }
-  const r=new FileReader();
-  r.onload=e=>{
-    lastThumbData=e.target.result;
-    preview.innerHTML=`<img src="${lastThumbData}" style="width:100%;height:100%;object-fit:cover">`;
+// إنشاء أزرار القنوات
+CHANNELS.forEach((ch,i)=>{
+  const btn = document.createElement('button');
+  btn.textContent = ch.name;
+  btn.className = 'channel-btn'+(i===0?' active':'');
+  btn.onclick = ()=>{
+    document.querySelectorAll('.channel-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    loadStream(ch.url);
   };
-  r.readAsDataURL(f);
+  channelsContainer.appendChild(btn);
+});
+
+// أول بث عند التحميل
+loadStream(currentURL);
+
+// أزرار التحكم
+reloadBtn.onclick = ()=>loadStream(currentURL);
+fullscreenBtn.onclick = ()=>{
+  if(video.requestFullscreen) video.requestFullscreen();
+  else if(video.webkitRequestFullscreen) video.webkitRequestFullscreen();
+  else if(video.msRequestFullscreen) video.msRequestFullscreen();
 };
-
-addBtn.onclick=()=>{
-  const name=chName.value.trim();
-  const url=chUrl.value.trim();
-  if(!name||!url){ formMsg.textContent="أكمل البيانات"; return; }
-
-  if(addBtn.dataset.editIndex){
-    // تعديل
-    const idx=parseInt(addBtn.dataset.editIndex);
-    CHANNELS[idx]={name,url,image:lastThumbData||CHANNELS[idx].image};
-    delete addBtn.dataset.editIndex;
-    formMsg.textContent="تم تعديل القناة";
-  }else{
-    // إضافة جديدة
-    CHANNELS.unshift({name,url,image:lastThumbData||"https://via.placeholder.com/160x90?text=Channel"});
-    formMsg.textContent="تمت الإضافة";
-  }
-  localStorage.setItem("channelsDB",JSON.stringify(CHANNELS));
-  renderChannels(searchInput.value);
-  addForm.style.display="none"; resetForm();
-};
-
-window.deleteChannel=(i,e)=>{
-  e.stopPropagation();
-  if(confirm("هل تريد حذف القناة؟")){
-    CHANNELS.splice(i,1);
-    localStorage.setItem("channelsDB",JSON.stringify(CHANNELS));
-    renderChannels(searchInput.value);
-  }
-};
-
-window.editChannel=(i,e)=>{
-  e.stopPropagation();
-  const ch=CHANNELS[i];
-  addForm.style.display="flex";
-  chName.value=ch.name;
-  chUrl.value=ch.url;
-  preview.innerHTML=`<img src="${ch.image}" style="width:100%;height:100%;object-fit:cover">`;
-  lastThumbData=ch.image;
-  addBtn.dataset.editIndex=i;
-};
-
-/* ================= Stop ================= */
-stopBtn.onclick=()=>{
-  if(hls){ hls.destroy(); hls=null; }
-  video.pause(); video.src="";
-  statusEl.textContent="متوقف";
-};
-
-/* ================= Search ================= */
-searchInput.oninput=()=>{ renderChannels(searchInput.value); };
-
-/* ================= Init ================= */
-renderChannels();
 </script>
+
 </body>
 </html>
