@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>مكتوب عليك — Adel TV</title>
+
+<!-- Google font (Arabic) -->
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --accent: #06b6d4;
+    --overlay: rgba(2,6,23,0.65); /* تغميق الخلفية */
+    --card-bg: rgba(255,255,255,0.04);
+  }
+  html,body{
+    height:100%;
+    margin:0;
+    font-family: "Tajawal", Arial, sans-serif;
+    direction: rtl;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    background: #000;
+  }
+
+  /* خلفية ملعب (استبدل الرابط بصورتك إذا رغبت) */
+  .bg {
+    position:fixed;
+    inset:0;
+    background-image: url("https://images.unsplash.com/photo-1517927033932-b2d6f3b5f4f8?q=80&w=1920&auto=format&fit=crop");
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.9) saturate(0.9);
+    z-index:0;
+  }
+
+  /* طبقة تغميق */
+  .overlay {
+    position:fixed;
+    inset:0;
+    background: var(--overlay);
+    z-index:1;
+  }
+
+  .container{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    box-sizing:border-box;
+  }
+
+  .card{
+    width:100%;
+    max-width:920px;
+    text-align:center;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    border-radius:14px;
+    padding:36px 28px;
+    box-shadow: 0 10px 40px rgba(2,6,23,0.6);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    justify-content:center;
+    margin-bottom:18px;
+  }
+  .logo{
+    width:64px;height:64px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:22px;
+    color:#052026;background:var(--accent);
+    box-shadow: 0 6px 20px rgba(6,182,212,0.15);
+  }
+  .brand h1{
+    margin:0;
+    font-size:20px;
+    color:#eaf6fb;
+    letter-spacing:0.6px;
+  }
+  .brand p{
+    margin:0;
+    color:var(--muted, #b6c6cf);
+    font-size:13px;
+    opacity:0.9;
+  }
+
+  .big-msg{
+    margin-top:12px;
+    font-size:48px;
+    line-height:1;
+    font-weight:700;
+    color:#fff;
+    text-shadow: 0 6px 30px rgba(0,0,0,0.6);
+  }
+
+  .sub-msg{
+    margin-top:10px;
+    color:#c7d8df;
+    font-size:16px;
+    opacity:0.95;
+  }
+
+  .actions{
+    margin-top:22px;
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .btn{
+    padding:10px 18px;
+    border-radius:10px;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.08);
+    color:#eaf6fb;
+    cursor:pointer;
+    font-weight:600;
+    backdrop-filter: blur(4px);
+  }
+  .btn.primary{
+    background: linear-gradient(90deg,#06b6d4,#0284c7);
+    border:none;
+    color:#052026;
+  }
+
+  /* تأثير بسيط على ظهور النص */
+  .card{ transform: translateY(6px); opacity:0; animation: appear .7s ease-out forwards; }
+  @keyframes appear {
+    to{ transform:none; opacity:1; }
+  }
+
+  /* استجابة */
+  @media (max-width:520px){
+    .big-msg{ font-size:34px; }
+    .card{ padding:22px; border-radius:12px; }
+    .logo{ width:56px;height:56px;font-size:20px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="bg" aria-hidden="true"></div>
+  <div class="overlay" aria-hidden="true"></div>
+
+  <main class="container" role="main" aria-labelledby="title">
+    <section class="card" aria-live="polite">
+      <div class="brand">
+        <div class="logo">A</div>
+        <div>
+          <h1 id="title">مكتوب عليك — Adel TV</h1>
+          <p>القناة الرسمية لبث المباريات والفعاليات</p>
+        </div>
+      </div>
+
+      <div class="big-msg">لا توجد مباريات حاليا</div>
+      <div class="sub-msg">تابعنا لاحقاً لمعرفة آخر المباريات والمباريات الحيّة.</div>
+
+      <div class="actions">
+        <button class="btn" onclick="location.reload()">تحديث الصفحة</button>
+        <button class="btn primary" onclick="openHome()">العودة للصفحة الرئيسية</button>
+      </div>
+    </section>
+  </main>
+
+<script>
+  function openHome(){
+    // عدّل هذا الرابط إن أردت إعادة التوجيه لصفحة رئيسية خاصة بك
+    window.location.href = "/";
+  }
+</script>
+
+</body>
+</html>
