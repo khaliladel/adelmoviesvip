@@ -6,7 +6,6 @@
 <title>Adel Movies - Maintenance</title>
 
 <style>
-/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -21,7 +20,6 @@ body {
   overflow: hidden;
 }
 
-/* Background overlay */
 .background {
   position: fixed;
   top: 0;
@@ -36,7 +34,6 @@ body {
   z-index: -1;
 }
 
-/* Header */
 header {
   padding: 25px 40px;
 }
@@ -48,9 +45,8 @@ header {
   letter-spacing: 1px;
 }
 
-/* Center content */
 .container {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 120px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,12 +74,17 @@ header {
   opacity: 0.9;
 }
 
-/* Button */
-.button {
-  display: inline-block;
-  margin-top: 25px;
-  padding: 14px 35px;
-  background: #e50914;
+/* Telegram Section */
+.telegram {
+  margin-top: 30px;
+}
+
+.telegram a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  background: #0088cc;
   color: #fff;
   font-size: 18px;
   text-decoration: none;
@@ -91,8 +92,13 @@ header {
   transition: 0.3s;
 }
 
-.button:hover {
-  background: #f6121d;
+.telegram a:hover {
+  background: #00a2ff;
+}
+
+.telegram img {
+  width: 24px;
+  height: 24px;
 }
 
 /* Footer */
@@ -122,10 +128,18 @@ footer {
     <p>الموقع في حال صيانة حاليًا</p>
     <p>نقوم بتحسين التجربة وإضافة أفلام ومسلسلات جديدة 🎬</p>
 
-    <p style="margin-top:10px;">Le site est actuellement en maintenance.<br>
-    Nous serons de retour très bientôt.</p>
+    <p style="margin-top:10px;">
+      Le site est actuellement en maintenance.<br>
+      Nous serons de retour très bientôt.
+    </p>
 
-    <a href="#" class="button">العودة قريبًا</a>
+    <!-- Telegram -->
+    <div class="telegram">
+      <a href="https://t.me/Adoula_Movies" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+        تابعنا على التيليغرام
+      </a>
+    </div>
   </div>
 </div>
 
